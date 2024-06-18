@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bili_app/http/core/hi_error.dart';
 import 'package:flutter_bili_app/http/core/hi_net.dart';
+import 'package:flutter_bili_app/http/db/hi_cache.dart';
 import 'package:flutter_bili_app/http/request/test_request.dart';
 
 void main() {
@@ -63,35 +64,42 @@ class _MyHomePageState extends State<MyHomePage> {
 
   var result;
 
+  @override
+  void initState() {
+    super.initState();
+    HiCache.preInit();
+  }
+
   void _incrementCounter() async{
-    TestRequest request = TestRequest();
-    request.addParam("aa", "ddd").addParam("bb","bbb").addParam("requestPrams", "kkkk");
-    try {
-      result = await HiNet.getInstance().fire(request);
-    }on NeedAuth catch(e){
-      if (kDebugMode) {
-        print(e);
-      }
-    }on NeedLogin catch(e){
-      if (kDebugMode) {
-        print(e);
-      }
-    }on HiNetError catch(e){
-      if (kDebugMode) {
-        print(e);
-      }
-    }
-    if (kDebugMode) {
-      print(result);
-    }
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
+    // TestRequest request = TestRequest();
+    // request.addParam("aa", "ddd").addParam("bb","bbb").addParam("requestPrams", "kkkk");
+    // try {
+    //   result = await HiNet.getInstance().fire(request);
+    // }on NeedAuth catch(e){
+    //   if (kDebugMode) {
+    //     print(e);
+    //   }
+    // }on NeedLogin catch(e){
+    //   if (kDebugMode) {
+    //     print(e);
+    //   }
+    // }on HiNetError catch(e){
+    //   if (kDebugMode) {
+    //     print(e);
+    //   }
+    // }
+    // if (kDebugMode) {
+    //   print(result);
+    // }
+    // setState(() {
+    //   // This call to setState tells the Flutter framework that something has
+    //   // changed in this State, which causes it to rerun the build method below
+    //   // so that the display can reflect the updated values. If we changed
+    //   // _counter without calling setState(), then the build method would not be
+    //   // called again, and so nothing would appear to happen.
+    //   _counter++;
+    // });
+    test2();
   }
 
   @override
@@ -147,6 +155,12 @@ class _MyHomePageState extends State<MyHomePage> {
         child: const Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
+  }
+
+  void test2(){
+    HiCache.getInstance()?.setString("aa", "1234");
+    var value = HiCache.getInstance()?.get("aa");
+    print("value : $value");
   }
 }
 
