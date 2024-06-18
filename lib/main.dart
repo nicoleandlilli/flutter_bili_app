@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bili_app/http/core/hi_error.dart';
 import 'package:flutter_bili_app/http/core/hi_net.dart';
 import 'package:flutter_bili_app/http/request/test_request.dart';
 
@@ -60,10 +61,26 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
 
+  var result;
+
   void _incrementCounter() async{
     TestRequest request = TestRequest();
     request.addParam("aa", "ddd").addParam("bb","bbb");
-    var result = await HiNet.getInstance().fire(request);
+    try {
+      result = await HiNet.getInstance().fire(request);
+    }on NeedAuth catch(e){
+      if (kDebugMode) {
+        print(e);
+      }
+    }on NeedLogin catch(e){
+      if (kDebugMode) {
+        print(e);
+      }
+    }on HiNetError catch(e){
+      if (kDebugMode) {
+        print(e);
+      }
+    }
     if (kDebugMode) {
       print(result);
     }
