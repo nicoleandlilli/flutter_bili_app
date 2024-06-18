@@ -1,6 +1,8 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter_bili_app/http/core/hi_error.dart';
 
 import '../request/base_request.dart';
+import 'hi_net_adapter.dart';
 
 class HiNet{
   HiNet._();
@@ -11,13 +13,48 @@ class HiNet{
   }
 
   Future? fire(BaseRequest request) async {
-    var response  = await send(request);
+    HiNetResponse response;
+    var error;
 
-    var result = response['data'];
+    try{
+      response = await send(request);
+    } on HiNetError catch(e){
+      error=e;
+      response=e.data;
+      printLog(e.message);
+    }
+
+    if(response==null){
+      printLog(error);
+    }
+
+    var result = response.data;
     printLog(result);
 
-   return result;
+    var status=response.statusCode;
+    switch(status){
+      case 200:
+        return result;
+      case 401:
+        throw NeedLogin();
+      case 403:
+        throw NeedAuth(result.toString(),data: result);
+      default:
+        throw HiNetError(status!, result.toString(),data: result);
+
+    }
+
+    return result;
   }
+
+  // Future? fire(BaseRequest request) async {
+  //   var response  = await send(request);
+  //
+  //   var result = response['data'];
+  //   printLog(result);
+  //
+  //  return result;
+  // }
 
   Future<dynamic>send<T>(BaseRequest request) async{
 
@@ -39,7 +76,4 @@ class HiNet{
     }
   }
 
-}
-
-class HiNetResponse {
 }
