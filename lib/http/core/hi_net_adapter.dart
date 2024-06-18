@@ -4,7 +4,7 @@ import '../request/base_request.dart';
 
 
 abstract class HiNetAdapter {
-  Future<HiNetResponse<T>> send<T>(BaseRequest request);
+  Future<HiNetResponse<dynamic>> send<T>(BaseRequest request);
 }
 
 ///统一网络层返回格式

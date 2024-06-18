@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bili_app/http/core/hi_net.dart';
 import 'package:flutter_bili_app/http/request/test_request.dart';
@@ -63,7 +64,9 @@ class _MyHomePageState extends State<MyHomePage> {
     TestRequest request = TestRequest();
     request.addParam("aa", "ddd").addParam("bb","bbb");
     var result = await HiNet.getInstance().fire(request);
-    print(result);
+    if (kDebugMode) {
+      print(result);
+    }
     setState(() {
       // This call to setState tells the Flutter framework that something has
       // changed in this State, which causes it to rerun the build method below

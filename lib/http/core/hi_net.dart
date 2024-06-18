@@ -3,6 +3,7 @@ import 'package:flutter_bili_app/http/core/hi_error.dart';
 
 import '../request/base_request.dart';
 import 'hi_net_adapter.dart';
+import 'mock_adapter.dart';
 
 class HiNet{
   HiNet._();
@@ -56,17 +57,31 @@ class HiNet{
   //  return result;
   // }
 
+  // Future<dynamic>send<T>(BaseRequest request) async{
+  //
+  //   printLog('url:${request.url()}');
+  //   printLog('method:${request.httpMethod()}');
+  //   request.addHeader("token", "123");
+  //   printLog('url:${request.url()}');
+  //   return Future.value({"statusCode":200,"data":{"code":0,"message":"success"}});
+  //
+  //   ///使用Mock发送请求
+  //   // HiNetAdapter adapter = MockAdapter();
+  //   // return adapter.send(request);
+  //
+  // }
+
+
   Future<dynamic>send<T>(BaseRequest request) async{
 
     printLog('url:${request.url()}');
     printLog('method:${request.httpMethod()}');
     request.addHeader("token", "123");
     printLog('url:${request.url()}');
-    return Future.value({"statusCode":200,"data":{"code":0,"message":"success"}});
 
     ///使用Mock发送请求
-    // HiNetAdapter adapter = MockAdapter();
-    // return adapter.send(request);
+    HiNetAdapter adapter = MockAdapter();
+    return adapter.send(request);
 
   }
 
