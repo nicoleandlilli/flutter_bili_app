@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter_bili_app/http/core/dio_adapter.dart';
 import 'package:flutter_bili_app/http/core/hi_error.dart';
 
 import '../request/base_request.dart';
@@ -80,7 +81,9 @@ class HiNet{
     printLog('url:${request.url()}');
 
     ///使用Mock发送请求
-    HiNetAdapter adapter = MockAdapter();
+    // HiNetAdapter adapter = MockAdapter();
+    ///使用Mock发送请求
+    HiNetAdapter adapter = DioAdapter();
     return adapter.send(request);
 
   }

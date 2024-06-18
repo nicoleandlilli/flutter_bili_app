@@ -65,7 +65,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _incrementCounter() async{
     TestRequest request = TestRequest();
-    request.addParam("aa", "ddd").addParam("bb","bbb");
+    request.addParam("aa", "ddd").addParam("bb","bbb").addParam("requestPrams", "kkkk");
     try {
       result = await HiNet.getInstance().fire(request);
     }on NeedAuth catch(e){
