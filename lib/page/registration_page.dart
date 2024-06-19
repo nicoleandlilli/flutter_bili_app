@@ -7,13 +7,13 @@ import '../widget/login_input.dart';
 class RegistrationPage extends StatefulWidget{
   const RegistrationPage({super.key});
 
-
     @override
    _RegistrationPageState createState() => _RegistrationPageState();
 
   }
 
 class _RegistrationPageState extends State<RegistrationPage>{
+  bool protect = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,7 +24,7 @@ class _RegistrationPageState extends State<RegistrationPage>{
         child: ListView(
           //自适应键盘弹起，防止遮挡
           children: [
-            LoginEffect(protect: true,),
+            LoginEffect(protect: protect),
             LoginInput(
               "用户名",
               "请输入用户名",
@@ -41,6 +41,11 @@ class _RegistrationPageState extends State<RegistrationPage>{
               true,
               onChanged: (text) {
                 print(text);
+              },
+              focusChanged: (focus) {
+                setState(() {
+                  protect = focus;
+                });
               },
             ),
           ]
