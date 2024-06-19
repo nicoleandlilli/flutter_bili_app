@@ -7,12 +7,12 @@ import 'package:flutter_bili_app/util/color.dart';
 import 'db/hi_cache.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
+  MyApp({super.key});
+  VoidCallback onJumpToLogin = (){};
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       // home: const MyHomePage(title: 'Flutter Demo Home Page'),
-      home: RegistrationPage(),
+      home: RegistrationPage(onJumpToLogin: onJumpToLogin,),
     );
   }
 }

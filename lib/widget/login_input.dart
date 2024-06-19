@@ -20,7 +20,7 @@ class LoginInput extends StatefulWidget{
       {super.key,
       this.onChanged,
       this.focusChanged,
-      this.keyboardType});
+      this.keyboardType,});
 
   @override
   _LoginInputState createState() => _LoginInputState();
