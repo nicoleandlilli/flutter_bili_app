@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bili_app/http/core/hi_error.dart';
 import 'package:flutter_bili_app/http/dao/login_dao.dart';
+import 'package:flutter_bili_app/page/login_page.dart';
 import 'package:flutter_bili_app/page/registration_page.dart';
 import 'package:flutter_bili_app/util/color.dart';
 
@@ -25,7 +26,8 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       // home: const MyHomePage(title: 'Flutter Demo Home Page'),
-      home: RegistrationPage(onJumpToLogin: onJumpToLogin,),
+      // home: RegistrationPage(onJumpToLogin: onJumpToLogin,),
+      home: LoginPage(),
     );
   }
 }

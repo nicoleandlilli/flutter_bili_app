@@ -49,7 +49,7 @@ class _RegistrationPageState extends State<RegistrationPage>{
             LoginInput(
               "密码",
               "请输入密码",
-              false,
+              true,
               true,
               onChanged: (text) {
                 password=text;
@@ -64,7 +64,7 @@ class _RegistrationPageState extends State<RegistrationPage>{
             LoginInput(
               "确认密码",
               "请再次输入密码",
-              false,
+              true,
               true,
               onChanged: (text) {
                 rePassword=text;
