@@ -24,6 +24,8 @@ class _LoginEffectState extends State<LoginEffect> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           _image(true),
+          const Image(height: 90, width: 90, image: AssetImage('images/logo.png')),
+          _image(false),
         ],
       ),
     );
