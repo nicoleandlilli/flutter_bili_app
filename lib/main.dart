@@ -1,10 +1,8 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bili_app/http/core/hi_error.dart';
-import 'package:flutter_bili_app/http/core/hi_net.dart';
 import 'package:flutter_bili_app/http/dao/login_dao.dart';
-import 'package:flutter_bili_app/http/db/hi_cache.dart';
-import 'package:flutter_bili_app/http/request/test_request.dart';
+
+import 'db/hi_cache.dart';
 
 void main() {
   runApp(const MyApp());
