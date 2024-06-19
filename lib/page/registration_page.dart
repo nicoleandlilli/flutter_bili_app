@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bili_app/widget/appbar.dart';
+import 'package:flutter_bili_app/widget/login_effect.dart';
 
 import '../widget/login_input.dart';
 
@@ -23,6 +24,7 @@ class _RegistrationPageState extends State<RegistrationPage>{
         child: ListView(
           //自适应键盘弹起，防止遮挡
           children: [
+            LoginEffect(protect: true,),
             LoginInput(
               "用户名",
               "请输入用户名",
