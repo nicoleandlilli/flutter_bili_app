@@ -17,6 +17,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    HiCache.preInit();
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
@@ -26,8 +27,8 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       // home: const MyHomePage(title: 'Flutter Demo Home Page'),
-      // home: RegistrationPage(onJumpToLogin: onJumpToLogin,),
-      home: LoginPage(),
+      home: RegistrationPage(onJumpToLogin: onJumpToLogin,),
+      // home: LoginPage(),
     );
   }
 }

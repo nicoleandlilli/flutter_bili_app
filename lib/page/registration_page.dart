@@ -1,11 +1,15 @@
+import 'dart:convert';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bili_app/util/toast.dart';
 import 'package:flutter_bili_app/widget/appbar.dart';
 import 'package:flutter_bili_app/widget/login_effect.dart';
 
 import '../http/core/hi_error.dart';
 import '../http/dao/login_dao.dart';
 import '../util/string_util.dart';
+import '../widget/login_button.dart';
 import '../widget/login_input.dart';
 
 class RegistrationPage extends StatefulWidget{
@@ -99,7 +103,7 @@ class _RegistrationPageState extends State<RegistrationPage>{
               },
             ),
             Padding(padding: EdgeInsets.only(top: 20, left: 20, right: 20),
-            child: _loginButton(),),
+            child:  LoginButton("注册", enable: loginEnable, onPressed: checkParams,),),
           ]
 
         ),
@@ -140,27 +144,31 @@ class _RegistrationPageState extends State<RegistrationPage>{
   }
 
   void send() async{
+    // _Map<String, dynamic>
     try {
       var result = await LoginDao.registration(
           userName!, password!, imoocId!, orderId!);
 
-      // if(result['0'] == 0){
-      //   print('注册成功');
-      //   if(widget.onJumpToLogin != null){
-      //     widget.onJumpToLogin();
-      //   }
-      // }else{
-      // print(result['msg']);
-      // }
-
-      if(result != null){
-        if (kDebugMode) {
-          print('注册成功');
-        }
+      if(result['code'] == 0){
+        print('注册成功');
+      showToast("注册成功");
         if(widget.onJumpToLogin != null){
           widget.onJumpToLogin();
         }
+      }else{
+      print(result['msg']);
+      showWarnToast(result['msg']);
       }
+
+      // if(result != null){
+      //   if (kDebugMode) {
+      //     print('注册成功');
+      //   }
+      //   showToast("注册成功")
+      //   if(widget.onJumpToLogin != null){
+      //     widget.onJumpToLogin();
+      //   }
+      // }
 
       if (kDebugMode) {
         print(result);
@@ -169,10 +177,12 @@ class _RegistrationPageState extends State<RegistrationPage>{
       if (kDebugMode) {
         print(e);
       }
+      showWarnToast(e.message);
     }on HiNetError catch(e){
       if (kDebugMode) {
         print(e);
       }
+      showWarnToast(e.message);
     }
   }
 
@@ -185,6 +195,7 @@ class _RegistrationPageState extends State<RegistrationPage>{
     }
     if(tips != null){
       print(tips);
+      showWarnToast(tips!);
       return;
     }
     send();

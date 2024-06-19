@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bili_app/util/toast.dart';
 import 'package:flutter_bili_app/widget/appbar.dart';
 import 'package:flutter_bili_app/widget/login_button.dart';
 import 'package:flutter_bili_app/widget/login_effect.dart';
@@ -83,18 +84,19 @@ class _LoginPageState extends State<LoginPage> {
     try {
       var result = await LoginDao.login( userName!, password!);
 
-      // if(result['0'] == 0){
-      //   print('注册成功');
-      //   if(widget.onJumpToLogin != null){
-      //     widget.onJumpToLogin();
-      //   }
-      // }else{
-      // print(result['msg']);
-      // }
+      if(result['code'] == 0){
+        print('登录成功');
+
+      }else{
+      print(result['msg']);
+      showWarnToast(result['msg']);
+      }
 
       if(result != null){
         if (kDebugMode) {
           print('登录成功');
+          showToast("登录成功");
+
         }
       }
 
@@ -102,10 +104,12 @@ class _LoginPageState extends State<LoginPage> {
         print(result);
       }
     }on NeedAuth catch(e){
+      showWarnToast(e.message);
       if (kDebugMode) {
         print(e);
       }
     }on HiNetError catch(e){
+      showWarnToast(e.message);
       if (kDebugMode) {
         print(e);
       }

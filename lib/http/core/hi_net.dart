@@ -34,6 +34,7 @@ class HiNet{
     printLog(result);
 
     var status=response.statusCode;
+    printLog("status.............$status");
     switch(status){
       case 200:
         return result;

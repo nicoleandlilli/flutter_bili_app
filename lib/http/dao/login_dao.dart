@@ -38,8 +38,10 @@ class LoginDao{
 
     var result = await HiNet.getInstance().fire(request);
     if (kDebugMode) {
-      print(result);
+      print("login_dao.....result:.........."+result.toString());
     }
+
+    return result;
   }
 
   static getBoardingPass() {
