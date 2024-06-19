@@ -77,7 +77,8 @@ class HiNet{
 
     printLog('url:${request.url()}');
     printLog('method:${request.httpMethod()}');
-    request.addHeader("token", "123");
+    // request.addHeader("token", "123");
+    request.addHeader("token", 'ZmEtMjAyMS0wNC0xMiAyMToyMjoyMC1mYQ==fa');
     printLog('url:${request.url()}');
 
     ///使用Mock发送请求

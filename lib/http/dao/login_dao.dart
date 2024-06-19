@@ -4,7 +4,11 @@ import 'package:flutter_bili_app/http/request/base_request.dart';
 import 'package:flutter_bili_app/http/request/login_request.dart';
 import 'package:flutter_bili_app/http/request/registration_request.dart';
 
+import '../db/hi_cache.dart';
+
 class LoginDao{
+  static const BOARDING_PASS = "boarding-pass";
+
   static login(String userName, String password){
     return _send(userName, password);
   }
@@ -34,5 +38,9 @@ class LoginDao{
     if (kDebugMode) {
       print(result);
     }
+  }
+
+  static getBoardingPass() {
+    return HiCache.getInstance()?.get(BOARDING_PASS);
   }
 }

@@ -167,11 +167,12 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void test3() async{
     try {
-      // var result = await LoginDao.registration(
-      //     'java', 'flutter', '122222', '5566');
+      var result = await LoginDao.registration(
+          'java', 'flutter', '264191 ', '1903170325025965 ');
 
-      var result = await LoginDao.login(
-          'java', 'flutter');
+
+      // var result = await LoginDao.login(
+      //     'java', 'flutter');
       print(result);
     }on NeedAuth catch(e){
       print(e);
