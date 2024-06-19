@@ -1,5 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bili_app/widget/appbar.dart';
 
 import '../widget/login_input.dart';
 
@@ -16,6 +16,9 @@ class _RegistrationPageState extends State<RegistrationPage>{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: appBar("注册", "登录", () { 
+        print('right button click.');
+      }),
       body: Container(
         child: ListView(
           //自适应键盘弹起，防止遮挡
