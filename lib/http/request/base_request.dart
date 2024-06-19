@@ -49,7 +49,12 @@ abstract class BaseRequest{
   }
 
 
-  Map<String, String> header= {};
+  Map<String, String> header= {
+    'course-flag': 'fa',
+    //访问令牌，在课程公告获取
+    'auth-token': "MjAyMC0wNi0yMyAwMzoyNTowMQ==fa",
+    // 'boarding-pass': '登录成功返回的boarding-pass'
+  };
 
   //添加header
   BaseRequest addHeader(String k, Object v){
