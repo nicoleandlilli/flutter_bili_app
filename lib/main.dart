@@ -59,7 +59,7 @@ class BiliRouteDelegate extends RouterDelegate<BiliRoutePath>
   BiliRouteDelegate() : navigatorKey = GlobalKey<NavigatorState>();
   RouteStatus _routeStatus = RouteStatus.home;
   List<MaterialPage> pages=[];
-  late VideoModel videoModel;
+  VideoModel? videoModel;
 
 
   @override
@@ -82,19 +82,23 @@ class BiliRouteDelegate extends RouterDelegate<BiliRoutePath>
         },
       ));
     }else if(routeStatus==RouteStatus.detail){
-      page=pageWrap(VideoDetailPage(videoModel: videoModel,));
+      page=pageWrap(VideoDetailPage(videoModel: videoModel!,));
     }else if(routeStatus==RouteStatus.registration){
       page=pageWrap(RegistrationPage(onJumpToLogin: () {
         _routeStatus=RouteStatus.login;
         notifyListeners();
       },));
-    }else if(routeStatus==RouteStatus.registration){
-      page=pageWrap(RegistrationPage(onJumpToLogin: (){
-        _routeStatus=RouteStatus.login;
-        notifyListeners();
-      },));
     }else if(routeStatus==RouteStatus.login){
-      page=pageWrap(LoginPage());
+      page=pageWrap(LoginPage(
+        onSuccess: (){
+          _routeStatus = RouteStatus.home;
+          notifyListeners();
+        },
+        onJumpRegistration: (){
+          _routeStatus = RouteStatus.registration;
+          notifyListeners();
+        },
+      ));
     }
 
     //重新创建一个数组，否则pages因引用没有改变路由不会生效
@@ -138,6 +142,7 @@ class BiliRoutePath {
   BiliRoutePath.home() : location = "/";
 
   BiliRoutePath.detail() : location = "/detail";
+
 }
 
 

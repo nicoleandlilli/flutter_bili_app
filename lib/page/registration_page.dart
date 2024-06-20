@@ -6,6 +6,7 @@ import 'package:flutter_bili_app/util/toast.dart';
 import 'package:flutter_bili_app/widget/appbar.dart';
 import 'package:flutter_bili_app/widget/login_effect.dart';
 
+import '../db/hi_cache.dart';
 import '../http/core/hi_error.dart';
 import '../http/dao/login_dao.dart';
 import '../util/string_util.dart';
@@ -156,8 +157,14 @@ class _RegistrationPageState extends State<RegistrationPage>{
           widget.onJumpToLogin();
         }
       }else{
-      print(result['msg']);
-      showWarnToast(result['msg']);
+        print(result['msg']);
+        // showWarnToast(result['msg']);
+
+         HiCache.getInstance()?.setString("key", "value");
+         HiCache.getInstance()?.setString("username", "$userName");
+         HiCache.getInstance()?.setString("password", "$password");
+        showToast("注册成功");
+         // widget.onSuccess();
       }
 
       // if(result != null){

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bili_app/db/hi_cache.dart';
 import 'package:flutter_bili_app/util/toast.dart';
 import 'package:flutter_bili_app/widget/appbar.dart';
 import 'package:flutter_bili_app/widget/login_button.dart';
@@ -12,6 +13,11 @@ import '../util/string_util.dart';
 import '../widget/login_input.dart';
 
 class LoginPage extends StatefulWidget {
+  final VoidCallback onJumpRegistration;
+  final VoidCallback onSuccess;
+
+  const LoginPage({super.key,required this.onJumpRegistration,required this.onSuccess});
+
   @override
   _LoginPageState createState() => _LoginPageState();
 
@@ -27,9 +33,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBar("密码登录", "注册", () {
-
-    }),
+      appBar: appBar("密码登录", "注册", widget.onJumpRegistration),
     body: Container(
     child: ListView(
       children: [
@@ -88,8 +92,11 @@ class _LoginPageState extends State<LoginPage> {
         print('登录成功');
 
       }else{
-      print(result['msg']);
-      showWarnToast(result['msg']);
+        print(result['msg']);
+        HiCache.getInstance()?.setString("key", "value");
+        // showWarnToast(result['msg']);
+        showToast("登录成功");
+        widget.onSuccess();
       }
 
       if(result != null){
