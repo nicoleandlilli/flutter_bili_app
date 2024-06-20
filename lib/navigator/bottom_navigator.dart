@@ -46,6 +46,7 @@ class _BottomNavigatorState extends State<BottomNavigator> {
             _currentIndex = index;
           });
         },
+        type: BottomNavigationBarType.fixed,
         selectedItemColor: _activeColor,
         items: [
           _bottomItem('首页',Icons.home,0),
