@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bili_app/main.dart';
+import 'package:flutter_bili_app/navigator/hi_navigator.dart';
 import 'package:flutter_bili_app/util/toast.dart';
 import 'package:flutter_bili_app/widget/appbar.dart';
 import 'package:flutter_bili_app/widget/login_effect.dart';
@@ -14,9 +16,8 @@ import '../widget/login_button.dart';
 import '../widget/login_input.dart';
 
 class RegistrationPage extends StatefulWidget{
-  final VoidCallback onJumpToLogin;
 
-  const RegistrationPage({super.key, required this.onJumpToLogin});
+  const RegistrationPage({super.key});
 
     @override
    _RegistrationPageState createState() => _RegistrationPageState();
@@ -35,7 +36,9 @@ class _RegistrationPageState extends State<RegistrationPage>{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBar("注册", "登录", widget.onJumpToLogin),
+      appBar: appBar("注册", "登录", (){
+        HiNavigator.getInstance().onJumpTo(RouteStatus.login);
+      }),
       body: Container(
         child: ListView(
           //自适应键盘弹起，防止遮挡
@@ -153,9 +156,7 @@ class _RegistrationPageState extends State<RegistrationPage>{
       if(result['code'] == 0){
         print('注册成功');
       showToast("注册成功");
-        if(widget.onJumpToLogin != null){
-          widget.onJumpToLogin();
-        }
+        HiNavigator.getInstance().onJumpTo(RouteStatus.registration);
       }else{
         print(result['msg']);
         // showWarnToast(result['msg']);

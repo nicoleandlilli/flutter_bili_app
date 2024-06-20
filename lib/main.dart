@@ -89,23 +89,9 @@ class BiliRouteDelegate extends RouterDelegate<BiliRoutePath>
         videoModel: videoModel!,
       ));
     } else if (routeStatus == RouteStatus.registration) {
-      page = pageWrap(RegistrationPage(
-        onJumpToLogin: () {
-          _routeStatus = RouteStatus.login;
-          notifyListeners();
-        },
-      ));
+      page = pageWrap(const RegistrationPage());
     } else if (routeStatus == RouteStatus.login) {
-      page = pageWrap(LoginPage(
-        onSuccess: () {
-          _routeStatus = RouteStatus.home;
-          notifyListeners();
-        },
-        onJumpRegistration: () {
-          _routeStatus = RouteStatus.registration;
-          notifyListeners();
-        },
-      ));
+      page = pageWrap(const LoginPage());
     }
 
     //重新创建一个数组，否则pages因引用没有改变路由不会生效

@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bili_app/db/hi_cache.dart';
+import 'package:flutter_bili_app/main.dart';
+import 'package:flutter_bili_app/navigator/hi_navigator.dart';
 import 'package:flutter_bili_app/util/toast.dart';
 import 'package:flutter_bili_app/widget/appbar.dart';
 import 'package:flutter_bili_app/widget/login_button.dart';
@@ -13,10 +15,8 @@ import '../util/string_util.dart';
 import '../widget/login_input.dart';
 
 class LoginPage extends StatefulWidget {
-  final VoidCallback onJumpRegistration;
-  final VoidCallback onSuccess;
 
-  const LoginPage({super.key,required this.onJumpRegistration,required this.onSuccess});
+  const LoginPage({super.key});
 
   @override
   _LoginPageState createState() => _LoginPageState();
@@ -33,7 +33,9 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBar("密码登录", "注册", widget.onJumpRegistration),
+      appBar: appBar("密码登录", "注册", (){
+        HiNavigator.getInstance().onJumpTo(RouteStatus.registration);
+      }),
     body: Container(
     child: ListView(
       children: [
@@ -95,7 +97,7 @@ class _LoginPageState extends State<LoginPage> {
         print(result['msg']);
         // showWarnToast(result['msg']);
         showToast("登录成功");
-        widget.onSuccess();
+        HiNavigator.getInstance().onJumpTo(RouteStatus.home);
         LoginDao.setBoardingPass("value");
       }
 
