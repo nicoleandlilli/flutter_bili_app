@@ -26,6 +26,16 @@ class _HomePageState extends State<HomePage>{
       if (kDebugMode) {
         print('pre:${pre.page}');
       }
+
+      if(widget==current.page||current.page is HomePage){
+        if (kDebugMode) {
+          print('打开了首页：onResume');
+        }
+      }else if(widget == pre?.page || pre?.page is HomePage){
+        if (kDebugMode) {
+          print('首页：onPause');
+        }
+      }
     });
   }
   @override
