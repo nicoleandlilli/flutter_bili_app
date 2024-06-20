@@ -176,79 +176,7 @@ class BiliRoutePath {
   BiliRoutePath.detail() : location = "/detail";
 }
 
-///监听路由页面跳转
-///感知当前页面是否压后台
-class HiNavigator extends _RouteJumpListener{
-  static HiNavigator? _instance;
-  RouteJumpListener? _routeJumpListener;
-  ///所有页面注册的页面跳转listener的集合
-  List<RouteChangeListener>_listeners=[];
-  ///打开过的页面
-  RouteStatusInfo? _current;
-  HiNavigator._();
 
-  static HiNavigator getInstance(){
-    _instance ??= HiNavigator._();
-    return _instance!;
-  }
-
-  ///注册路由跳转逻辑
-  void registerRouteJump(RouteJumpListener routeJumpListener){
-    _routeJumpListener = routeJumpListener;
-  }
-
-  ///添加监听路由页面跳转
-  void addListener(RouteChangeListener listener){
-    if(!_listeners.contains(listener)){
-      _listeners.add(listener);
-    }
-  }
-
-  ///移除监听路由页面跳转
-  void removeListener(RouteChangeListener listener){
-    _listeners.remove(listener);
-  }
-
-  @override
-  void onJumpTo(RouteStatus routeStatus, {Map? args}) {
-    _routeJumpListener!.onJumpTo!(routeStatus, args: args);
-  }
-
-  ///通知路由页面变化
-  void notify(List<MaterialPage> currentPages, List<MaterialPage> prePages){
-    if(currentPages==prePages) return;
-    var current = RouteStatusInfo(getStatus(currentPages.last), currentPages.last.child);
-    _notify(current);
-  }
-
-  void _notify(RouteStatusInfo current){
-    if (kDebugMode) {
-      print('hi_navigator:current:${current.page}');
-    }
-    if (kDebugMode) {
-      print('hi_navigator:pre:${_current?.page}');
-    }
-    for (var listener in _listeners) {
-      listener(current,_current!);
-    }
-    _current = current;
-  }
-
-}
-
-///抽象类供HiNavigator实现
-abstract class _RouteJumpListener {
-  void onJumpTo(RouteStatus routeStatus, {Map? args});
-}
-
-typedef OnJumpTo = void Function(RouteStatus routeStatus, {Map? args});
-
-///定义路由跳转逻辑要实现的功能
-class RouteJumpListener {
-  final OnJumpTo? onJumpTo;
-
-  RouteJumpListener({this.onJumpTo});
-}
 
 //   // void test2(){
 //   //   HiCache.getInstance()?.setString("aa", "1234");
