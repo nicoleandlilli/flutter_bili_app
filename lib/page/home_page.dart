@@ -15,6 +15,24 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage>{
+  var listener;
+  @override
+  void initState() {
+    super.initState();
+    HiNavigator.getInstance().addListener(listener = (current, pre) {
+      if (kDebugMode) {
+        print('current:${current.page}');
+      }
+      if (kDebugMode) {
+        print('pre:${pre.page}');
+      }
+    });
+  }
+  @override
+  void dispose() {
+    HiNavigator.getInstance().removeListener(listener);
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
    return Scaffold(

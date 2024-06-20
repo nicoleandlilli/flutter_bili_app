@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bili_app/http/dao/login_dao.dart';
 import 'package:flutter_bili_app/navigator/hi_navigator.dart';
@@ -96,6 +97,8 @@ class BiliRouteDelegate extends RouterDelegate<BiliRoutePath>
 
     //重新创建一个数组，否则pages因引用没有改变路由不会生效
     tempPages = [...tempPages, page];
+    //通知路由发生变化
+    HiNavigator.getInstance().notify(tempPages, pages);
     pages = tempPages;
 
 
@@ -126,7 +129,9 @@ class BiliRouteDelegate extends RouterDelegate<BiliRoutePath>
               return false;
             }
 
+            var tempPages=[...pages];
             pages.removeLast();
+            HiNavigator.getInstance().notify(pages, tempPages);
             return true;
           },
         ));
@@ -174,6 +179,10 @@ class BiliRoutePath {
 class HiNavigator extends _RouteJumpListener{
   static HiNavigator? _instance;
   RouteJumpListener? _routeJumpListener;
+  ///所有页面注册的页面跳转listener的集合
+  List<RouteChangeListener>_listeners=[];
+  ///打开过的页面
+  RouteStatusInfo? _current;
   HiNavigator._();
 
   static HiNavigator getInstance(){
@@ -186,9 +195,41 @@ class HiNavigator extends _RouteJumpListener{
     _routeJumpListener = routeJumpListener;
   }
 
+  ///添加监听路由页面跳转
+  void addListener(RouteChangeListener listener){
+    if(!_listeners.contains(listener)){
+      _listeners.add(listener);
+    }
+  }
+
+  ///移除监听路由页面跳转
+  void removeListener(RouteChangeListener listener){
+    _listeners.remove(listener);
+  }
+
   @override
   void onJumpTo(RouteStatus routeStatus, {Map? args}) {
     _routeJumpListener!.onJumpTo!(routeStatus, args: args);
+  }
+
+  ///通知路由页面变化
+  void notify(List<MaterialPage> currentPages, List<MaterialPage> prePages){
+    if(currentPages==prePages) return;
+    var current = RouteStatusInfo(getStatus(currentPages.last), currentPages.last.child);
+    _notify(current);
+  }
+
+  void _notify(RouteStatusInfo current){
+    if (kDebugMode) {
+      print('hi_navigator:current:${current.page}');
+    }
+    if (kDebugMode) {
+      print('hi_navigator:pre:${_current?.page}');
+    }
+    for (var listener in _listeners) {
+      listener(current,_current!);
+    }
+    _current = current;
   }
 
 }

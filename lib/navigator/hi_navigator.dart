@@ -4,6 +4,8 @@ import 'package:flutter_bili_app/page/registration_page.dart';
 
 import '../page/home_page.dart';
 import '../page/video_detail_page.dart';
+
+typedef RouteChangeListener = Function(RouteStatusInfo current, RouteStatusInfo pre);
 ///创建界面
 pageWrap(Widget child){
   return MaterialPage(key: ValueKey(child.hashCode),child: child);
