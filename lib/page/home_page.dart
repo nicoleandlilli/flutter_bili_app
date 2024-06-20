@@ -14,17 +14,17 @@ class HomePage extends StatefulWidget {
   
 }
 
-class _HomePageState extends State<HomePage>{
+class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin{
   var listener;
   @override
   void initState() {
     super.initState();
     HiNavigator.getInstance().addListener(listener = (current, pre) {
       if (kDebugMode) {
-        print('current:${current.page}');
+        print('home:current:${current.page}');
       }
       if (kDebugMode) {
-        print('pre:${pre.page}');
+        print('home:pre:${pre.page}');
       }
 
       if(widget==current.page||current.page is HomePage){
@@ -66,5 +66,8 @@ class _HomePageState extends State<HomePage>{
      ),
    );
   }
+
+  @override
+  bool get wantKeepAlive => true;
   
 }

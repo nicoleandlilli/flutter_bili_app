@@ -64,6 +64,8 @@ class HiNavigator extends _RouteJumpListener{
   List<RouteChangeListener>_listeners=[];
   ///打开过的页面
   RouteStatusInfo? _current;
+  ///首页底部的tab
+  late RouteStatusInfo _bottomTab;
   HiNavigator._();
 
   static HiNavigator getInstance(){
@@ -71,6 +73,11 @@ class HiNavigator extends _RouteJumpListener{
     return _instance!;
   }
 
+  ///首页底部tab切换监听
+  void onBottomTabChange(int index, Widget page){
+    _bottomTab = RouteStatusInfo(RouteStatus.home, page);
+    _notify(_bottomTab);
+  }
 
   ///注册路由跳转逻辑
   void registerRouteJump(RouteJumpListener routeJumpListener){
@@ -102,6 +109,10 @@ class HiNavigator extends _RouteJumpListener{
   }
 
   void _notify(RouteStatusInfo current){
+    if(current.page is BottomNavigationBar && _bottomTab!=null){
+      //如果打开的是首页，则明确到首页具体的tab
+      current = _bottomTab;
+    }
     if (kDebugMode) {
       print('hi_navigator:current:${current.page}');
     }
