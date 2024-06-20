@@ -47,4 +47,8 @@ class LoginDao{
   static getBoardingPass() {
     return HiCache.getInstance()?.get(BOARDING_PASS);
   }
+
+  static setBoardingPass(String value) {
+    HiCache.getInstance()?.setString(BOARDING_PASS,value);
+  }
 }

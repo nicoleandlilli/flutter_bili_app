@@ -93,10 +93,10 @@ class _LoginPageState extends State<LoginPage> {
 
       }else{
         print(result['msg']);
-        HiCache.getInstance()?.setString("key", "value");
         // showWarnToast(result['msg']);
         showToast("登录成功");
         widget.onSuccess();
+        LoginDao.setBoardingPass("value");
       }
 
       if(result != null){
