@@ -35,6 +35,7 @@ class _BottomNavigatorState extends State<BottomNavigator> {
             _currentIndex = index;
           });
         },
+        physics: const NeverScrollableScrollPhysics(),
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
