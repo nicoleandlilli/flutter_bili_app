@@ -55,7 +55,17 @@ class BiliRouteDelegate extends RouterDelegate<BiliRoutePath>
   final GlobalKey<NavigatorState> navigatorKey;
 
   //为Navigator设置一个key，必要的时候可以通过navigatorKey.currentState来获取到NavigatorState对象
-  BiliRouteDelegate() : navigatorKey = GlobalKey<NavigatorState>();
+  BiliRouteDelegate() : navigatorKey = GlobalKey<NavigatorState>(){
+    //实现路由跳转逻辑
+    HiNavigator.getInstance().registerRouteJump(RouteJumpListener(onJumpTo: (RouteStatus routeStatus,{Map? args}){
+      _routeStatus = routeStatus;
+      if(routeStatus == RouteStatus.detail){
+        videoModel = args?['videoMo'];
+      }
+      notifyListeners();
+    }));
+  }
+
   RouteStatus _routeStatus = RouteStatus.home;
   List<MaterialPage> pages = [];
   VideoModel? videoModel;
@@ -73,12 +83,7 @@ class BiliRouteDelegate extends RouterDelegate<BiliRoutePath>
     if (routeStatus == RouteStatus.home) {
       //跳转首页时将栈中其它页面进行出栈，因为首页不可回退
       pages.clear();
-      page = pageWrap(HomePage(
-        onJumpToDetail: (videoModel) {
-          this.videoModel = videoModel;
-          notifyListeners();
-        },
-      ));
+      page = pageWrap(const HomePage());
     } else if (routeStatus == RouteStatus.detail) {
       page = pageWrap(VideoDetailPage(
         videoModel: videoModel!,
@@ -178,9 +183,50 @@ class BiliRoutePath {
   BiliRoutePath.detail() : location = "/detail";
 }
 
+///监听路由页面跳转
+///感知当前页面是否压后台
+class HiNavigator extends _RouteJumpListener{
+  static HiNavigator? _instance;
+  RouteJumpListener? _routeJumpListener;
+  HiNavigator._();
+
+  static HiNavigator getInstance(){
+    _instance ??= HiNavigator._();
+    return _instance!;
+  }
+
+  ///注册路由跳转逻辑
+  void registerRouteJump(RouteJumpListener routeJumpListener){
+    _routeJumpListener = routeJumpListener;
+  }
+
+  @override
+  void onJumpTo(RouteStatus routeStatus, {Map? args}) {
+    _routeJumpListener!.onJumpTo!(routeStatus, args: args);
+  }
+
+}
+
+///抽象类供HiNavigator实现
+abstract class _RouteJumpListener {
+  void onJumpTo(RouteStatus routeStatus, {Map? args});
+}
+
+typedef OnJumpTo = void Function(RouteStatus routeStatus, {Map? args});
+
+///定义路由跳转逻辑要实现的功能
+class RouteJumpListener {
+  final OnJumpTo? onJumpTo;
+
+  RouteJumpListener({this.onJumpTo});
+}
+
 //   // void test2(){
 //   //   HiCache.getInstance()?.setString("aa", "1234");
 //   //   var value = HiCache.getInstance()?.get("aa");
 //   //   print("value : $value");
 //   // }
+
+
+///5----7
 
