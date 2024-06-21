@@ -1,8 +1,11 @@
 import 'package:flutter/cupertino.dart';
 
+import '../model/home_mo.dart';
+
 class HomeTabPage extends StatefulWidget{
   String name;
-  HomeTabPage({super.key,required this.name});
+  List<BannerMo>? bannerList ;
+  HomeTabPage({super.key,required this.name, this.bannerList});
 
   @override
   _HomeTabPageState createState() => _HomeTabPageState();

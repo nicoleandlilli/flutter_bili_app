@@ -18,12 +18,15 @@ class DioAdapter extends HiNetAdapter{
       }else if(request.httpMethod()==HttpMethod.DELETE){
         response= await Dio().delete(request.url(),data: request.params,options: options);
       }
+      print('dio_adapter..........:finish request, get response');
     }on DioError catch(e){
       error=e;
       response=e.response;
+      print('dio_adapter..........:${e.toString()}.......${e.response}');
     }
     if(error!=null){
       //抛出HiNetError
+      print('dio_adapter..........:error.......${error.toString()}..........${error.response}');
       throw HiNetError(response?.statusCode ?? -1, error.toString(),data: buildRes(response,request));
     }
     return buildRes(response, request);
