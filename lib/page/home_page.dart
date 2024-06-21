@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bili_app/main.dart';
 import 'package:flutter_bili_app/navigator/hi_navigator.dart';
+import 'package:flutter_bili_app/page/home_tab_page.dart';
 import 'package:flutter_bili_app/util/color.dart';
 import 'package:underline_indicator/underline_indicator.dart';
 import '../model/video_model.dart';
@@ -51,26 +52,20 @@ class _HomePageState extends State<HomePage>
   @override
   Widget build(BuildContext context) {
    return Scaffold(
-     // appBar: AppBar(),
      body: Container(
        child: Column(
          children: [
            Container(
              color: Colors.white,
-             padding: EdgeInsets.only(top: 30),
+             padding: const EdgeInsets.only(top: 30),
              child: _tabBar(),
            ),
-           const Text('首页'),
-           MaterialButton(
-               onPressed: () {
-                 if (kDebugMode) {
-                   print("点击了详情按钮");
-                 }
-                HiNavigator.getInstance().onJumpTo(RouteStatus.detail,
-                  args: {'videoMo': VideoModel(10001)});
-               },
-             child: const Text("详情"),
-           ),
+           Flexible(child: TabBarView(
+             controller: _controller,
+             children: tabs.map((tab) {
+               return HomeTabPage(name:tab);
+             }).toList(),
+           )),
          ],
        ),
      ),
