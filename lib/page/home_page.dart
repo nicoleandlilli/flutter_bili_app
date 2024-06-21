@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bili_app/core/hi_state.dart';
 import 'package:flutter_bili_app/http/core/hi_error.dart';
 import 'package:flutter_bili_app/http/dao/home_dao.dart';
 import 'package:flutter_bili_app/main.dart';
@@ -19,9 +20,11 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
   
 }
+// class _HomePageState extends State<HomePage>
 
-class _HomePageState extends State<HomePage>
+class _HomePageState extends HiState<HomePage>
     with AutomaticKeepAliveClientMixin,TickerProviderStateMixin{
+
   var listener;
   late TabController _controller;
   var tabs = ["推荐","热门", "追播","影视","搞笑","日常","综合","手机游戏","短片-手书-配音"];
