@@ -39,6 +39,7 @@ dependencies:
   shared_preferences: ^2.2.3
   fluttertoast: ^8.2.6
   underline_indicator: ^0.0.4
+  flutter_swiper_null_safety: ^1.0.2
 
 dev_dependencies:
   flutter_test:

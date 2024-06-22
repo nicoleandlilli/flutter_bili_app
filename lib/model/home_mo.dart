@@ -503,6 +503,8 @@ class CategoryMo {
 
 class BannerMo {
   String? title;
-
-  BannerMo({this.title});
+  String? cover;
+  int? aid;
+  int? tid;
+  BannerMo({this.title,this.cover,this.aid,this.tid});
 }

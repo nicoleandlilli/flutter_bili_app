@@ -3,14 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bili_app/core/hi_state.dart';
 import 'package:flutter_bili_app/http/core/hi_error.dart';
 import 'package:flutter_bili_app/http/dao/home_dao.dart';
-import 'package:flutter_bili_app/main.dart';
 import 'package:flutter_bili_app/navigator/hi_navigator.dart';
 import 'package:flutter_bili_app/page/home_tab_page.dart';
 import 'package:flutter_bili_app/util/color.dart';
 import 'package:flutter_bili_app/util/toast.dart';
 import 'package:underline_indicator/underline_indicator.dart';
 import '../model/home_mo.dart';
-import '../model/video_model.dart';
 
 
 class HomePage extends StatefulWidget {
@@ -131,7 +129,12 @@ class _HomePageState extends HiState<HomePage>
       //模拟数据
       List<BannerMo> tempBannerList = [];
       for(int i=0;i<4;i++){
-        tempBannerList.add(BannerMo(title: tabs[i]));
+        BannerMo bm = BannerMo();
+        bm.title = tabs[i];
+        bm.aid = videoMos?[i+5].aid;
+        bm.tid = videoMos?[i+5].tid;
+        bm.cover = videoMos?[i+5].pic;
+        tempBannerList.add(bm);
       }
 
 

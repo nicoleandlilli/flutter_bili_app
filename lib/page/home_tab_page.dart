@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_bili_app/widget/hi_banner.dart';
 
 import '../model/home_mo.dart';
 
@@ -16,9 +17,21 @@ class _HomeTabPageState extends State<HomeTabPage>{
   @override
   Widget build(BuildContext context) {
     return Container(
-      alignment: Alignment.center,
-      child: Text(widget.name),
+      child: ListView(
+        //dart collection if灵活创建列表
+        children: [
+          if(widget.bannerList!=null)_banner()
+        ],
+      ),
     );
+  }
+
+  _banner() {
+    return Padding(
+        padding: EdgeInsets.only(left: 8,right: 8),
+      child: HiBanner(widget!.bannerList!),
+    );
+    
   }
 
 }
