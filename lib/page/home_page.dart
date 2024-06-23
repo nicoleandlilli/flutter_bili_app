@@ -14,7 +14,8 @@ import '../model/home_mo.dart';
 
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  final ValueChanged<int>? onJumpTo;
+  const HomePage({super.key, this.onJumpTo});
   
   @override
   _HomePageState createState() => _HomePageState();
@@ -121,7 +122,9 @@ class _HomePageState extends HiState<HomePage>
         children: [
           InkWell(
             onTap: (){
-
+              if(widget.onJumpTo!=null){
+                widget.onJumpTo!(3);
+              }
             },
             child: ClipRRect(
               borderRadius: BorderRadius.circular(23),
