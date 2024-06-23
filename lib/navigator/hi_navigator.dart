@@ -1,11 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bili_app/model/home_mo.dart';
 import 'package:flutter_bili_app/page/login_page.dart';
 import 'package:flutter_bili_app/page/registration_page.dart';
 
 import '../http/dao/login_dao.dart';
-import '../model/video_model.dart';
-import '../page/home_page.dart';
 import '../page/video_detail_page.dart';
 import '../util/toast.dart';
 import 'bottom_navigator.dart';
@@ -153,7 +152,7 @@ class BiliRouteDelegate extends RouterDelegate<BiliRoutePath>
     HiNavigator.getInstance().registerRouteJump(RouteJumpListener(onJumpTo: (RouteStatus routeStatus,{Map? args}){
       _routeStatus = routeStatus;
       if(routeStatus == RouteStatus.detail){
-        videoModel = args?['videoMo'];
+        videoMo = args?['videoMo'];
       }
       notifyListeners();
     }));
@@ -161,7 +160,7 @@ class BiliRouteDelegate extends RouterDelegate<BiliRoutePath>
 
   RouteStatus _routeStatus = RouteStatus.home;
   List<MaterialPage> pages = [];
-  VideoModel? videoModel;
+  VideoMo? videoMo;
 
   @override
   Widget build(BuildContext context) {
@@ -180,7 +179,7 @@ class BiliRouteDelegate extends RouterDelegate<BiliRoutePath>
       page = pageWrap( BottomNavigator());
     } else if (routeStatus == RouteStatus.detail) {
       page = pageWrap(VideoDetailPage(
-        videoModel: videoModel!,
+        videoMo: videoMo!,
       ));
     } else if (routeStatus == RouteStatus.registration) {
       page = pageWrap(const RegistrationPage());
@@ -245,7 +244,7 @@ class BiliRouteDelegate extends RouterDelegate<BiliRoutePath>
   RouteStatus get routeStatus {
     if (_routeStatus != RouteStatus.registration && !hasLogin) {
       return _routeStatus = RouteStatus.login;
-    } else if (videoModel != null) {
+    } else if (videoMo != null) {
       return _routeStatus = RouteStatus.detail;
     } else {
       return _routeStatus;

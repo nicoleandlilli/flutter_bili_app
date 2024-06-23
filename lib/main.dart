@@ -1,17 +1,7 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bili_app/http/dao/login_dao.dart';
-import 'package:flutter_bili_app/navigator/bottom_navigator.dart';
 import 'package:flutter_bili_app/navigator/hi_navigator.dart';
-import 'package:flutter_bili_app/page/home_page.dart';
-import 'package:flutter_bili_app/page/login_page.dart';
-import 'package:flutter_bili_app/page/registration_page.dart';
-import 'package:flutter_bili_app/page/video_detail_page.dart';
 import 'package:flutter_bili_app/util/color.dart';
-import 'package:flutter_bili_app/util/toast.dart';
-
 import 'db/hi_cache.dart';
-import 'model/video_model.dart';
 
 void main() {
   runApp(BiliApp());
