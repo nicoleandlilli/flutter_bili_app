@@ -16,14 +16,23 @@ class HomeTabPage extends StatefulWidget{
 class _HomeTabPageState extends State<HomeTabPage>{
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: ListView(
-        //dart collection if灵活创建列表
-        children: [
-          if(widget.bannerList!=null)_banner()
-        ],
-      ),
+    return MediaQuery.removePadding(
+        context: context,
+        removeTop: true,
+        child: ListView(
+          children: [
+            if(widget.bannerList!=null)_banner(),
+          ],
+        )
     );
+    // return Container(
+    //   child: ListView(
+    //     //dart collection if灵活创建列表
+    //     children: [
+    //       if(widget.bannerList!=null)_banner()
+    //     ],
+    //   ),
+    // );
   }
 
   _banner() {
