@@ -131,7 +131,39 @@ class _HomePageState extends HiState<HomePage>
                 image: AssetImage('images/avatar.png'),
               ),
             ),
-          )
+          ),
+          Expanded(
+              child: Padding(
+                padding: const EdgeInsets.only(
+                  left: 15,
+                  right: 15,
+                ),
+                child:  ClipRRect(
+                  borderRadius: BorderRadius.circular(16),
+                  child: Container(
+                    padding: const EdgeInsets.only(left: 10),
+                    height: 32,
+                    alignment: Alignment.centerLeft,
+                    decoration: BoxDecoration(color: Colors.grey[100]),
+                    child: const Icon(
+                      Icons.search,
+                      color: Colors.grey,
+                    ),
+                  ),
+                ),
+              )
+          ),
+          const Icon(
+            Icons.explore_outlined,
+            color: Colors.grey,
+          ),
+          const Padding(padding: EdgeInsets.only(left: 12),
+            child: Icon(
+              Icons.mail_outline,
+              color: Colors.grey,
+            ),
+          ),
+
         ],
       ),
     );
