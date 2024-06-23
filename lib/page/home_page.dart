@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+
 import 'package:flutter_bili_app/core/hi_state.dart';
 import 'package:flutter_bili_app/http/core/hi_error.dart';
 import 'package:flutter_bili_app/http/dao/home_dao.dart';
@@ -7,6 +8,7 @@ import 'package:flutter_bili_app/navigator/hi_navigator.dart';
 import 'package:flutter_bili_app/page/home_tab_page.dart';
 import 'package:flutter_bili_app/util/color.dart';
 import 'package:flutter_bili_app/util/toast.dart';
+import 'package:flutter_bili_app/widget/navigation_bar.dart';
 import 'package:underline_indicator/underline_indicator.dart';
 import '../model/home_mo.dart';
 
@@ -62,26 +64,30 @@ class _HomePageState extends HiState<HomePage>
   @override
   Widget build(BuildContext context) {
    return Scaffold(
-     body: Container(
-       child: Column(
-         children: [
-           Container(
-             color: Colors.white,
-             padding: const EdgeInsets.only(top: 30),
-             child: _tabBar(),
-           ),
-           Flexible(child: TabBarView(
-             controller: _controller,
-             children: categoryList.map((tab) {
-               print('init Flexible..........${categoryList.length}');
-               return HomeTabPage(
-                   name:tab.title!,
-                 bannerList: tab.title == '推荐' ? bannerList:null,
-               );
-             }).toList(),
-           )),
-         ],
-       ),
+     body: Column(
+       children: [
+         CNavigationBar(
+           height: 50,
+           child: _appBar(),
+           color: Colors.white,
+           statusStyle: StatusStyle.dartContent,
+         ),
+         Container(
+           color: Colors.white,
+           padding: const EdgeInsets.only(top: 30),
+           child: _tabBar(),
+
+         ),
+         Flexible(child: TabBarView(
+           controller: _controller,
+           children: categoryList.map((tab) {
+             return HomeTabPage(
+                 name:tab.title!,
+               bannerList: tab.title == '推荐' ? bannerList:null,
+             );
+           }).toList(),
+         )),
+       ],
      ),
    );
   }
@@ -106,6 +112,29 @@ class _HomePageState extends HiState<HomePage>
       ),);
     }).toList(),
     );// tabs: (tabs));
+  }
+
+  _appBar(){
+    return Padding(
+      padding: const EdgeInsets.only(left: 15, right: 15),
+      child: Row(
+        children: [
+          InkWell(
+            onTap: (){
+
+            },
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(23),
+              child: const Image(
+                height: 46,
+                width: 46,
+                image: AssetImage('images/avatar.png'),
+              ),
+            ),
+          )
+        ],
+      ),
+    );
   }
 
   void loadData() async{

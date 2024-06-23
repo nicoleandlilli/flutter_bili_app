@@ -309,6 +309,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.11.1"
+  statusbarmanager:
+    dependency: "direct main"
+    description:
+      name: statusbarmanager
+      sha256: "95df2b2ee62c05f4627dbd6230b87e34c4b88a799eb29500bf273b61e31e1542"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.1"
   stream_channel:
     dependency: transitive
     description:

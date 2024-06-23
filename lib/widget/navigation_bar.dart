@@ -1,27 +1,26 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 enum StatusStyle{
   lightContent,
   dartContent,
 }
-class NavigationBar extends StatelessWidget{
+class CNavigationBar extends StatelessWidget{
   final StatusStyle statusStyle;
   final Color color;
   final double height;
   final Widget? child;
 
-  const NavigationBar({
+  const CNavigationBar({
     super.key,
     this.statusStyle=StatusStyle.dartContent,
     this.color=Colors.white,
     this.height=46,
-    this.child;
     this.child,
   });
 
   @override
   Widget build(BuildContext context) {
+    _statusBarInit();
     var top = MediaQuery.of(context).padding.top;
     return Container(
       width: MediaQuery.of(context).size.width,
@@ -30,6 +29,12 @@ class NavigationBar extends StatelessWidget{
       decoration: BoxDecoration(color: color),
       child: child,
     );
+  }
+
+  void _statusBarInit() {
+    //沉浸式状态栏样式
+    // FlutterS
+
   }
 
 }
