@@ -35,8 +35,9 @@ class CNavigationBar extends StatelessWidget{
 
   void _statusBarInit() async{
     //沉浸式状态栏样式
-    StatusBarControl.setColor(color);
-    await StatusBarControl.setStyle(statusStyle==StatusStyle.dartContent?StatusBarStyle.LIGHT_CONTENT:StatusBarStyle.DARK_CONTENT);
+    StatusBarControl.setColor(color,animated: false);
+    //设置状态栏文字的颜色
+    await StatusBarControl.setStyle(statusStyle==StatusStyle.dartContent?StatusBarStyle.DARK_CONTENT:StatusBarStyle.LIGHT_CONTENT);
   }
 
 }
