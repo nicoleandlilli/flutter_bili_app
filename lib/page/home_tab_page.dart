@@ -35,24 +35,27 @@ class HomeTabPageState extends State<HomeTabPage>{
 
   @override
   Widget build(BuildContext context) {
-    return StaggeredGridView.countBuilder(
-      crossAxisCount: 2,
-      itemCount: videoList.length,
-      itemBuilder: (BuildContext context, int index) {
-        //有banner时第一个item位置显示banner
-        if (widget.bannerList != null && index == 0) {
-          return Padding(
-            padding: const EdgeInsets.only(bottom: 8), child: _banner(),);
-        } else {
-          return VideoCard(videoMo: videoList[index]);
-        }
-      }, staggeredTileBuilder: (int index) {
-      if (widget.bannerList != null && index == 0) {
-        return const StaggeredTile.fit(2);
-      } else {
-        return const StaggeredTile.fit(1);
-      }
-    },);
+    return MediaQuery.removePadding(
+        context: context,
+        removeTop: true,
+        child: StaggeredGridView.countBuilder(
+          crossAxisCount: 2,
+          itemCount: videoList.length,
+          itemBuilder: (BuildContext context, int index) {
+            //有banner时第一个item位置显示banner
+            if (widget.bannerList != null && index == 0) {
+              return Padding(
+                padding: const EdgeInsets.only(bottom: 8), child: _banner(),);
+            } else {
+              return VideoCard(videoMo: videoList[index]);
+            }
+          }, staggeredTileBuilder: (int index) {
+          if (widget.bannerList != null && index == 0) {
+            return const StaggeredTile.fit(2);
+          } else {
+            return const StaggeredTile.fit(1);
+          }
+        },));
 
   }
 
