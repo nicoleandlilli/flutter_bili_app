@@ -8,8 +8,8 @@ import 'package:flutter_bili_app/model/home_mo.dart';
 import '../../constant_value/constant_value.dart';
 
 class HomeDao {
-  static getRecommandVideos() async{
-    HomeRequest request = HomeRequest();
+  static get(String categoryName,{int?  pageIndex, int? pageSize}) async{
+    HomeRequest request = HomeRequest(categoryName,pageIndex: pageIndex, pageSize: pageSize);
     var result=await HiNet.getInstance().fire(request);
     if (kDebugMode) {
       print("home dao : $result");

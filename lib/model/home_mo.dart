@@ -34,6 +34,7 @@ class VideoMo {
   int? videos;
   int? tid;
   String? tname;
+  String? url;
   int? copyright;
   String? pic;
   String? title;
@@ -65,6 +66,7 @@ class VideoMo {
         this.videos,
         this.tid,
         this.tname,
+        this.url,
         this.copyright,
         this.pic,
         this.title,

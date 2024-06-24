@@ -83,7 +83,7 @@ class _HomePageState extends HiState<HomePage>
            controller: _controller,
            children: categoryList.map((tab) {
              return HomeTabPage(
-                 name:tab.title!,
+                 categoryName:tab.title!,
                bannerList: tab.title == '推荐' ? bannerList:null,
              );
            }).toList(),
@@ -174,7 +174,7 @@ class _HomePageState extends HiState<HomePage>
 
   void loadData() async{
     try{
-      HomeMo result=await HomeDao.getRecommandVideos();
+      HomeMo result=await HomeDao.get(tabs[0],pageIndex: 0, pageSize: 100);
       if (kDebugMode) {
         print("Home页获取到数据：$result");
       }
