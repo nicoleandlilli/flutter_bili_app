@@ -41,6 +41,7 @@ class HomeTabPageState extends State<HomeTabPage>{
         child: StaggeredGridView.countBuilder(
           crossAxisCount: 2,
           itemCount: videoList.length,
+          padding: const EdgeInsets.only(top: 10, left: 10, right: 10),
           itemBuilder: (BuildContext context, int index) {
             //有banner时第一个item位置显示banner
             if (widget.bannerList != null && index == 0) {
@@ -61,7 +62,7 @@ class HomeTabPageState extends State<HomeTabPage>{
 
   _banner() {
     return Padding(
-        padding: const EdgeInsets.only(left: 8,right: 8),
+        padding: const EdgeInsets.only(left: 5,right: 5),
       child: HiBanner(widget!.bannerList!),
     );
     
