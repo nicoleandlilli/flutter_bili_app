@@ -22,7 +22,8 @@ class HomeTabPage extends StatefulWidget{
 
 }
 
-class HomeTabPageState extends State<HomeTabPage>{
+// class HomeTabPageState extends State<HomeTabPage> {
+class HomeTabPageState extends State<HomeTabPage> with AutomaticKeepAliveClientMixin{
   List<VideoMo> videoList = [];
   int pageIndex = 1;
 
@@ -107,5 +108,8 @@ class HomeTabPageState extends State<HomeTabPage>{
       showWarnToast(e.toString());
     }
   }
+
+  @override
+  bool get wantKeepAlive => true;
 
 }
