@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bili_app/model/home_mo.dart';
 import 'package:flutter_bili_app/navigator/hi_navigator.dart';
 import 'package:flutter_bili_app/util/format_util.dart';
+import 'package:flutter_bili_app/util/view_util.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 class VideoCard extends StatelessWidget {
@@ -46,13 +47,14 @@ class VideoCard extends StatelessWidget {
 
     return Stack(
       children: [
-        FadeInImage.memoryNetwork(
-          height: 120,
-          //默认宽度
-          width: size.width/2-20,
-          placeholder: kTransparentImage,
-           image: videoMo!.pic!,
-          fit: BoxFit.cover,),
+        cachedImage(videoMo.pic!,width: size.width/2-10,height: 120),
+        // FadeInImage.memoryNetwork(
+        //   height: 120,
+        //   //默认宽度
+        //   width: size.width/2-20,
+        //   placeholder: kTransparentImage,
+        //    image: videoMo!.pic!,
+        //   fit: BoxFit.cover,),
         Positioned(
             left: 0,
             right: 0,
@@ -131,7 +133,8 @@ class VideoCard extends StatelessWidget {
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(12),
-              child: Image.network(owner!.face!,width: 24, height: 24,),
+              // child: Image.network(owner!.face!,width: 24, height: 24,),
+              child: cachedImage(owner!.face!,width: 24, height: 24,),
             ),
             Padding(padding: const EdgeInsets.only(left: 8),
             child: Text(owner.name!, style: const TextStyle(fontSize: 11, color: Colors.black87),),

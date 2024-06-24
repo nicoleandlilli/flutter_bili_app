@@ -43,6 +43,7 @@ dependencies:
   status_bar_control: ^3.2.1
   staggered_grid_view_flutter: ^0.0.4
   transparent_image: ^2.0.1
+  cached_network_image: ^3.3.1
 
 dev_dependencies:
   flutter_test:
