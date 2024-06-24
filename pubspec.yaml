@@ -42,6 +42,7 @@ dependencies:
   flutter_swiper_null_safety: ^1.0.2
   status_bar_control: ^3.2.1
   staggered_grid_view_flutter: ^0.0.4
+  transparent_image: ^2.0.1
 
 dev_dependencies:
   flutter_test:
