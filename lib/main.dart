@@ -4,17 +4,17 @@ import 'package:flutter_bili_app/util/color.dart';
 import 'db/hi_cache.dart';
 
 void main() {
-  runApp(BiliApp());
+  runApp(const BiliApp());
 }
 
 class BiliApp extends StatefulWidget {
   const BiliApp({super.key});
 
   @override
-  _BiliAppState createState() => _BiliAppState();
+  BiliAppState createState() => BiliAppState();
 }
 
-class _BiliAppState extends State<BiliApp> {
+class BiliAppState extends State<BiliApp> {
   final BiliRouteDelegate _routeDelegate = BiliRouteDelegate();
 
   @override

@@ -18,12 +18,12 @@ class HomePage extends StatefulWidget {
   const HomePage({super.key, this.onJumpTo});
   
   @override
-  _HomePageState createState() => _HomePageState();
+  HomePageState createState() => HomePageState();
   
 }
 // class _HomePageState extends State<HomePage>
 
-class _HomePageState extends HiState<HomePage>
+class HomePageState extends HiState<HomePage>
     with AutomaticKeepAliveClientMixin,TickerProviderStateMixin{
 
   var listener;
@@ -85,6 +85,7 @@ class _HomePageState extends HiState<HomePage>
              return HomeTabPage(
                  categoryName:tab.title!,
                bannerList: tab.title == '推荐' ? bannerList:null,
+               tabIndex: 0,
              );
            }).toList(),
          )),
@@ -109,7 +110,7 @@ class _HomePageState extends HiState<HomePage>
     tabs: categoryList.map<Tab>((tab) {
       return Tab(child: Padding(
         padding: const EdgeInsets.only(left: 5,right: 5),
-        child: Text(tab.title!,style: TextStyle(fontSize: 16),),
+        child: Text(tab.title!,style: const TextStyle(fontSize: 16),),
       ),);
     }).toList(),
     );// tabs: (tabs));
@@ -195,9 +196,9 @@ class _HomePageState extends HiState<HomePage>
       for(int i=0;i<4;i++){
         BannerMo bm = BannerMo();
         bm.title = tabs[i];
-        bm.aid = videoMos?[i+5].aid;
-        bm.tid = videoMos?[i+5].tid;
-        bm.cover = videoMos?[i+5].pic;
+        bm.aid = videoMos?[i+15].aid;
+        bm.tid = videoMos?[i+15].tid;
+        bm.cover = videoMos?[i+15].pic;
         tempBannerList.add(bm);
       }
 

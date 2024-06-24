@@ -12,15 +12,17 @@ import '../util/toast.dart';
 
 class HomeTabPage extends StatefulWidget{
   String categoryName;
+  int tabIndex;
   List<BannerMo>? bannerList ;
-  HomeTabPage({super.key,required this.categoryName, this.bannerList});
+  var tabs = ["推荐","热门", "追播","影视","搞笑","日常","综合","手机游戏","短片-手书-配音"];
+  HomeTabPage({super.key,required this.categoryName, this.bannerList,required this.tabIndex});
 
   @override
-  _HomeTabPageState createState() => _HomeTabPageState();
+  HomeTabPageState createState() => HomeTabPageState();
 
 }
 
-class _HomeTabPageState extends State<HomeTabPage>{
+class HomeTabPageState extends State<HomeTabPage>{
   List<VideoMo> videoList = [];
   int pageIndex = 1;
 
@@ -35,19 +37,21 @@ class _HomeTabPageState extends State<HomeTabPage>{
   Widget build(BuildContext context) {
     return StaggeredGridView.countBuilder(
       crossAxisCount: 2,
+      itemCount: videoList.length,
       itemBuilder: (BuildContext context, int index) {
         //有banner时第一个item位置显示banner
-        if(widget.bannerList !=null && index ==0){
-          return Padding(padding: EdgeInsets.only(bottom: 8),child: _banner(),);
-        }else{
+        if (widget.bannerList != null && index == 0) {
+          return Padding(
+            padding: const EdgeInsets.only(bottom: 8), child: _banner(),);
+        } else {
           return VideoCard(videoMo: videoList[index]);
         }
       }, staggeredTileBuilder: (int index) {
-        if(widget.bannerList!=null&&index==0){
-          return const StaggeredTile.fit(2);
-        }else{
-          return const StaggeredTile.fit(1);
-        }
+      if (widget.bannerList != null && index == 0) {
+        return const StaggeredTile.fit(2);
+      } else {
+        return const StaggeredTile.fit(1);
+      }
     },);
 
   }
@@ -65,6 +69,7 @@ class _HomeTabPageState extends State<HomeTabPage>{
       pageIndex=1;
     }
     var currentIndex = pageIndex + (loadMore? 1: 0);
+    widget.tabIndex = widget.tabs.indexOf(widget.categoryName);
     try{
       HomeMo result=await HomeDao.get(widget.categoryName,pageIndex: currentIndex, pageSize: 100);
       setState(() {
@@ -74,7 +79,9 @@ class _HomeTabPageState extends State<HomeTabPage>{
             pageIndex++;
           }
         }else{
-          videoList = result!.list!;
+          //模拟不同tab界面返回的内容
+          var tempVideoList = result!.list!;
+          videoList = tempVideoList.sublist(widget.tabIndex*10,tempVideoList.length);
         }
       });
 
