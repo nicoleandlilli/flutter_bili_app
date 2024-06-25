@@ -31,7 +31,7 @@ class CNavigationBarState extends State<CNavigationBar>{
 
   @override
   Widget build(BuildContext context) {
-    _statusBarInit();
+    // _statusBarInit();
     //状态栏高度
     var top = MediaQuery.of(context).padding.top;
     return Container(
@@ -45,7 +45,7 @@ class CNavigationBarState extends State<CNavigationBar>{
 
 
 void _statusBarInit() async{
-  changeStatusBar(color: widget.color,statusStyle:widget.statusStyle)
+  changeStatusBar(color: widget.color,statusStyle:widget.statusStyle);
 }
 
 

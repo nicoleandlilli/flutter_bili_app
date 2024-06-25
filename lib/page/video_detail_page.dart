@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bili_app/model/home_mo.dart';
 import 'package:flutter_bili_app/widget/video_view.dart';
 
+import '../util/view_util.dart';
 import '../widget/appbar.dart';
 
 class VideoDetailPage extends StatefulWidget{
@@ -17,6 +18,11 @@ class VideoDetailPage extends StatefulWidget{
 
 class VideoDetailPageState extends State<VideoDetailPage> {
   @override
+  void initState() {
+    super.initState();
+    _statusBarInit();
+  }
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: MediaQuery.removePadding(context: context, child: Column(
@@ -27,6 +33,10 @@ class VideoDetailPageState extends State<VideoDetailPage> {
         ],
       )),
     );
+  }
+
+  void _statusBarInit() async{
+    changeStatusBar(color: Colors.black,statusStyle:StatusStyle.lightContent);
   }
 
 }
