@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-///主题色
-const MaterialColor white=MaterialColor(0xFFFFFFFF, <int, Color>{
+
+const MaterialColor white = MaterialColor(
+  0xFFFFFFFF,
+  <int, Color>{
     50: Color(0xFFFFFFFF),
     100: Color(0xFFFFFFFF),
     200: Color(0xFFFFFFFF),
@@ -11,8 +13,11 @@ const MaterialColor white=MaterialColor(0xFFFFFFFF, <int, Color>{
     700: Color(0xFFFFFFFF),
     800: Color(0xFFFFFFFF),
     900: Color(0xFFFFFFFF),
-  },);
+  },
+);
+
 ///主色调
 const MaterialColor primary = MaterialColor(
-    0XFFFB7299,
-    <int, Color>{50: Color(0xffff9db5)});
+  0xfffb7299,
+  <int, Color>{50: const Color(0xffff9db5)},
+);

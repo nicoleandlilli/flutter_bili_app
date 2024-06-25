@@ -22,7 +22,7 @@ Widget cachedImage(String url, {double? width, double? height}) {
         String url,
         dynamic error,
       ) =>
-          const Icon(Icons.error),
+          Icon(Icons.error),
       imageUrl: url);
 }
 
