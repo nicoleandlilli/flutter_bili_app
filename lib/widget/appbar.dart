@@ -13,7 +13,7 @@ appBar(String title, String rightTitle, VoidCallback rightButtonClick){
       InkResponse(
         onTap: rightButtonClick,
         child: Container(
-          padding: EdgeInsets.only(left: 15, right: 15),
+          padding: const EdgeInsets.only(left: 15, right: 15),
           alignment: Alignment.center,
           child: Text(rightTitle, style: TextStyle(fontSize: 18,color: Colors.grey[500]),textAlign: TextAlign.center,),
         ),

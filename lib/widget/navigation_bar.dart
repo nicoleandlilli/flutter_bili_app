@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:status_bar_control/status_bar_control.dart';
+import 'package:flutter_bili_app/util/view_util.dart';
 
-enum StatusStyle{
-  lightContent,
-  dartContent,
-}
-class CNavigationBar extends StatelessWidget{
+
+///可自定义样式的沉浸式导航栏
+class CNavigationBar extends StatefulWidget {
   final StatusStyle statusStyle;
   final Color color;
   final double height;
@@ -13,11 +11,23 @@ class CNavigationBar extends StatelessWidget{
 
   const CNavigationBar({
     super.key,
-    this.statusStyle=StatusStyle.dartContent,
+    this.statusStyle=StatusStyle.darkContent,
     this.color=Colors.white,
     this.height=46,
     this.child,
   });
+
+  @override
+  CNavigationBarState createState() => CNavigationBarState();
+
+}
+class CNavigationBarState extends State<CNavigationBar>{
+
+  @override
+  void initState() {
+    super.initState();
+    _statusBarInit();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,18 +36,17 @@ class CNavigationBar extends StatelessWidget{
     var top = MediaQuery.of(context).padding.top;
     return Container(
       width: MediaQuery.of(context).size.width,
-      height: top + height,
+      height: top + widget.height,
       padding: EdgeInsets.only(top: top),
-      decoration: BoxDecoration(color: color),
-      child: child,
+      decoration: BoxDecoration(color: widget.color),
+      child: widget.child,
     );
   }
 
-  void _statusBarInit() async{
-    //沉浸式状态栏样式
-    StatusBarControl.setColor(color,animated: false);
-    //设置状态栏文字的颜色
-    await StatusBarControl.setStyle(statusStyle==StatusStyle.dartContent?StatusBarStyle.DARK_CONTENT:StatusBarStyle.LIGHT_CONTENT);
-  }
+
+void _statusBarInit() async{
+  changeStatusBar(color: widget.color,statusStyle:widget.statusStyle)
+}
+
 
 }

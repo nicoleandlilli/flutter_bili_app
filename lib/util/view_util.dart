@@ -2,9 +2,10 @@ import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
-enum StatusStyle { LIGHT_CONTENT, DARK_CONTENT }
+import 'package:status_bar_control/status_bar_control.dart';
+
+enum StatusStyle { lightContent, darkContent }
 
 ///带缓存的image
 Widget cachedImage(String url, {double? width, double? height}) {
@@ -41,24 +42,29 @@ blackLinearGradient({bool fromTop = false}) {
       ]);
 }
 ///修改状态栏
-void changeStatusBar(
+void changeStatusBar (
     {color = Colors.white,
-    StatusStyle statusStyle = StatusStyle.DARK_CONTENT,
-    BuildContext? context}) {
+    StatusStyle statusStyle = StatusStyle.darkContent,
+    BuildContext? context}) async{
   //沉浸式状态栏样式
   Brightness brightness;
   if (Platform.isIOS) {
-    brightness = statusStyle == StatusStyle.LIGHT_CONTENT
+    brightness = statusStyle == StatusStyle.lightContent
         ? Brightness.dark
         : Brightness.light;
   } else {
-    brightness = statusStyle == StatusStyle.LIGHT_CONTENT
+    brightness = statusStyle == StatusStyle.lightContent
         ? Brightness.light
         : Brightness.dark;
   }
-  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light.copyWith(
-    statusBarColor: Colors.transparent,
-    statusBarBrightness: brightness,
-    statusBarIconBrightness: brightness,
-  ));
+  // SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light.copyWith(
+  //   statusBarColor: Colors.transparent,
+  //   statusBarBrightness: brightness,
+  //   statusBarIconBrightness: brightness,
+  // ));
+
+  //沉浸式状态栏样式
+  StatusBarControl.setColor(color,animated: false);
+  //设置状态栏文字的颜色
+  await StatusBarControl.setStyle(statusStyle==StatusStyle.darkContent?StatusBarStyle.DARK_CONTENT:StatusBarStyle.LIGHT_CONTENT);
 }
