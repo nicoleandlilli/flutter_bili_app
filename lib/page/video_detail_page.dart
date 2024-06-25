@@ -1,6 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bili_app/model/home_mo.dart';
 import 'package:flutter_bili_app/widget/video_view.dart';
+
+import '../widget/appbar.dart';
 
 class VideoDetailPage extends StatefulWidget{
   final VideoMo videoMo;
@@ -17,8 +21,13 @@ class _VideoDetailPageState extends State<VideoDetailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
-      body: VideoView(widget.videoMo.shortLinkV2!,cover:widget.videoMo.pic,),
+      body: MediaQuery.removePadding(context: context, child: Column(
+        children: [
+          // if(Platform.isIOS)
+
+          VideoView(widget.videoMo.shortLinkV2!,cover:widget.videoMo.pic, overlayUI: videoAppBar(),),
+        ],
+      )),
     );
   }
 
