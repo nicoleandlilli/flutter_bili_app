@@ -29,7 +29,7 @@ class VideoDetailPageState extends State<VideoDetailPage> {
         children: [
           // if(Platform.isIOS)
 
-          VideoView(widget.videoMo.shortLinkV2!,cover:widget.videoMo.pic, overlayUI: videoAppBar(),),
+          VideoView(widget.videoMo.shortLinkV2!,cover:widget.videoMo.pic, overlayUI: videoAppBar(),autoPlay: true,),
         ],
       )),
     );

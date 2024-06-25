@@ -29,6 +29,7 @@ class VideoViewState extends State<VideoView> {
     widthFactor: 1,
     child: cachedImage(widget.cover!),
   );
+  var _newplaceholder;
   //进度条颜色配置
   get _progressColors => ChewieProgressColors(
     playedColor: primary,
@@ -49,15 +50,16 @@ class VideoViewState extends State<VideoView> {
   @override
   void initState() {
     super.initState();
+    _newplaceholder= _placeholder;
     //初始化播放器设置
-    _videoPlayerController=VideoPlayerController.networkUrl(Uri.parse(newUrl[4]));
+    _videoPlayerController=VideoPlayerController.networkUrl(Uri.parse(newUrl[0]));
     _initVideoPlayer();
     _chewieController=ChewieController(videoPlayerController: _videoPlayerController,
       aspectRatio: widget.aspectRatio,
       autoPlay: widget.autoPlay,
       looping: widget.looping,
       allowMuting: false,
-      placeholder: _placeholder,
+      placeholder: _newplaceholder,
       allowPlaybackSpeedChanging: false,
       customControls: MaterialControls(
         showBigPlayIcon: false,
@@ -68,8 +70,12 @@ class VideoViewState extends State<VideoView> {
       materialProgressColors: _progressColors,
     );
   }
-  _initVideoPlayer() async{
-    await _videoPlayerController.initialize();
+  _initVideoPlayer(){
+    _videoPlayerController.initialize().then((value) => {
+      setState(() {
+
+      })
+    });
   }
 
 
