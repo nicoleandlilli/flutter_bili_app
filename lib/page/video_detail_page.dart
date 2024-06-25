@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bili_app/model/home_mo.dart';
+import 'package:flutter_bili_app/widget/video_view.dart';
 
 class VideoDetailPage extends StatefulWidget{
   final VideoMo videoMo;
@@ -17,9 +18,7 @@ class _VideoDetailPageState extends State<VideoDetailPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: Container(
-        child: Text('视频详情页，vid:${widget.videoMo.tid}'),
-      ),
+      body: VideoView(widget.videoMo.shortLinkV2!,cover:widget.videoMo.pic,),
     );
   }
 
