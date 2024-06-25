@@ -87,9 +87,9 @@ class VideoViewState extends State<VideoView> {
 
   @override
   void dispose() {
-    super.dispose();
     _videoPlayerController.dispose();
     _chewieController.dispose();
+    super.dispose();
   }
 
 }
