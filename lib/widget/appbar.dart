@@ -26,6 +26,7 @@ appBar(String title, String rightTitle, VoidCallback rightButtonClick){
 videoAppBar(){
   return Container(
     padding: const EdgeInsets.only(right: 8),
+    margin: const EdgeInsets.only(top: 20),
     decoration: BoxDecoration(gradient: blackLinearGradient(fromTop: true)),
     child: const Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,

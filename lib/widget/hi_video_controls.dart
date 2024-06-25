@@ -31,13 +31,12 @@ class MaterialControls extends StatefulWidget {
   final Widget? barrageUI;
 
   const MaterialControls(
-      {Key? key,
+      {super.key,
       this.showLoadingOnInitialize = true,
       this.showBigPlayIcon = true,
       this.overlayUI,
       this.bottomGradient,
-      this.barrageUI})
-      : super(key: key);
+      this.barrageUI});
 
   @override
   State<StatefulWidget> createState() {
