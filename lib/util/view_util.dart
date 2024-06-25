@@ -22,7 +22,7 @@ Widget cachedImage(String url, {double? width, double? height}) {
         String url,
         dynamic error,
       ) =>
-          Icon(Icons.error),
+          const Icon(Icons.error),
       imageUrl: url);
 }
 
@@ -31,7 +31,7 @@ blackLinearGradient({bool fromTop = false}) {
   return LinearGradient(
       begin: fromTop ? Alignment.topCenter : Alignment.bottomCenter,
       end: fromTop ? Alignment.bottomCenter : Alignment.topCenter,
-      colors: [
+      colors: const [
         Colors.black54,
         Colors.black45,
         Colors.black38,
@@ -46,7 +46,7 @@ void changeStatusBar(
     StatusStyle statusStyle = StatusStyle.DARK_CONTENT,
     BuildContext? context}) {
   //沉浸式状态栏样式
-  var brightness;
+  Brightness brightness;
   if (Platform.isIOS) {
     brightness = statusStyle == StatusStyle.LIGHT_CONTENT
         ? Brightness.dark
