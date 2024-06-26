@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bili_app/model/home_mo.dart';
 import 'package:flutter_bili_app/widget/hi_tab.dart';
 import 'package:flutter_bili_app/widget/navigation_bar.dart';
+import 'package:flutter_bili_app/widget/video_header.dart';
 import 'package:flutter_bili_app/widget/video_view.dart';
 
 import '../util/view_util.dart';
@@ -50,6 +51,14 @@ class VideoDetailPageState extends State<VideoDetailPage> with TickerProviderSta
           // )
           VideoView(widget.videoMo.shortLinkV2!,cover:widget.videoMo.pic, overlayUI: videoAppBar(),autoPlay: true,),
           _buildTabNavigation(),
+          Flexible(
+              child: TabBarView(
+                controller: _controller,
+                children: [
+                  _buildDetailList(),
+                  const Text('敬请期待...')
+                ],
+              )),
         ],
       )),
     );
@@ -66,6 +75,7 @@ class VideoDetailPageState extends State<VideoDetailPage> with TickerProviderSta
       elevation: 5,
       shadowColor: Colors.grey[100],
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           _tabBar(),
           const Padding(padding: EdgeInsets.only(right: 20),child: Icon(Icons.live_tv_rounded,color: Colors.grey,),)
@@ -82,6 +92,21 @@ class VideoDetailPageState extends State<VideoDetailPage> with TickerProviderSta
           );
         }).toList(),
         controller: _controller,
+    );
+  }
+
+  _buildDetailList() {
+    return ListView(
+      padding: const EdgeInsets.all(0),
+      children: [
+        buildContents(),
+      ],
+    );
+  }
+
+  buildContents() {
+    return Container(
+      child: VideoHeader(owner: widget.videoMo.owner!,stat: widget.videoMo.stat!,),
     );
   }
 
