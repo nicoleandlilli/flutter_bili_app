@@ -26,9 +26,13 @@ class VideoToolBar extends StatelessWidget {
         border: borderLine(context),
       ),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          _buildIconText(Icons.thumb_up_alt_rounded,videoMo.stat?.like,onClick: onLike, tint: videoMo.stat!.hisRank!>=2)
+          _buildIconText(Icons.thumb_up_alt_rounded,videoMo.stat?.like,onClick: onLike, tint:videoMo.stat!.like!>=500),
+          _buildIconText(Icons.thumb_down_alt_rounded,'不喜欢',onClick: onUnLike, tint: videoMo.stat!.hisRank!>=15),
+          _buildIconText(Icons.monetization_on,videoMo.stat?.coin,onClick: onCoin, tint: videoMo.stat!.hisRank!>=15),
+          _buildIconText(Icons.grade_rounded,videoMo.stat?.favorite,onClick: onFavorite, tint: videoMo.stat!.favorite!>=50),
+          _buildIconText(Icons.share_rounded,videoMo.stat?.share,onClick: onShare, tint: videoMo.stat!.hisRank!>=12),
         ],
       ),
     );
@@ -46,7 +50,7 @@ class VideoToolBar extends StatelessWidget {
       onTap: onClick,
       child: Column(
         children: [
-          Icon(iconData, color: tint?primary:Colors.grey,),
+          Icon(iconData, color: tint?primary:Colors.grey,size: 20,),
           hiSpace(height: 5),
           Text(text, style: const TextStyle(color: Colors.grey, fontSize: 12),),
         ],

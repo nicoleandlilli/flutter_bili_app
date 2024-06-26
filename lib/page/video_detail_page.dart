@@ -43,7 +43,8 @@ class VideoDetailPageState extends State<VideoDetailPage> with TickerProviderSta
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: MediaQuery.removePadding(context: context, child: Column(
+      body: MediaQuery.removePadding(context: context,
+          child: Column(
         children: [
           // iOS黑色状态栏
           // CNavigationBar(
