@@ -6,6 +6,7 @@ import 'package:flutter_bili_app/widget/expandable_content.dart';
 import 'package:flutter_bili_app/widget/hi_tab.dart';
 import 'package:flutter_bili_app/widget/navigation_bar.dart';
 import 'package:flutter_bili_app/widget/video_header.dart';
+import 'package:flutter_bili_app/widget/video_tool_bar.dart';
 import 'package:flutter_bili_app/widget/video_view.dart';
 
 import '../util/view_util.dart';
@@ -117,8 +118,21 @@ class VideoDetailPageState extends State<VideoDetailPage> with TickerProviderSta
       children: [
         VideoHeader(owner: widget.videoMo.owner!,stat: widget.videoMo.stat!,),
         ExpandableContent(videoMo: widget.videoMo),
+        VideoToolBar(videoMo: widget.videoMo,onLike: _doLike, onUnLike: _doUnLike, onFavorite: _onFavorite,),
       ],
     );
+  }
+
+  void _doLike(){
+
+  }
+
+  void _doUnLike(){
+
+  }
+
+  void _onFavorite(){
+
   }
 
 }
