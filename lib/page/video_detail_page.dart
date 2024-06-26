@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bili_app/model/home_mo.dart';
+import 'package:flutter_bili_app/widget/expandable_content.dart';
 import 'package:flutter_bili_app/widget/hi_tab.dart';
 import 'package:flutter_bili_app/widget/navigation_bar.dart';
 import 'package:flutter_bili_app/widget/video_header.dart';
@@ -56,7 +57,7 @@ class VideoDetailPageState extends State<VideoDetailPage> with TickerProviderSta
                 controller: _controller,
                 children: [
                   _buildDetailList(),
-                  const Text('敬请期待...')
+                  const Text('评论')
                 ],
               )),
         ],
@@ -98,16 +99,17 @@ class VideoDetailPageState extends State<VideoDetailPage> with TickerProviderSta
   _buildDetailList() {
     return ListView(
       padding: const EdgeInsets.all(0),
-      children: [
-        buildContents(),
-      ],
+      children: buildContents(),
     );
   }
 
   buildContents() {
-    return Container(
-      child: VideoHeader(owner: widget.videoMo.owner!,stat: widget.videoMo.stat!,),
-    );
+    return [
+      Container(
+        child: VideoHeader(owner: widget.videoMo.owner!,stat: widget.videoMo.stat!,),
+      ),
+      ExpandableContent(videoMo: widget.videoMo),
+    ];
   }
 
 }
