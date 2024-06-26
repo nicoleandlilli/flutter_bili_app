@@ -6,6 +6,7 @@ import 'package:flutter_bili_app/http/core/hi_error.dart';
 import 'package:flutter_bili_app/http/dao/home_dao.dart';
 import 'package:flutter_bili_app/navigator/hi_navigator.dart';
 import 'package:flutter_bili_app/page/home_tab_page.dart';
+import 'package:flutter_bili_app/page/profile_page.dart';
 import 'package:flutter_bili_app/page/video_detail_page.dart';
 import 'package:flutter_bili_app/util/color.dart';
 import 'package:flutter_bili_app/util/toast.dart';
@@ -59,6 +60,11 @@ class HomePageState extends HiState<HomePage>
           print('首页：onPause');
         }
       }
+
+      if(pre?.page is VideoDetailPage && current.page is! ProfilePage){
+        var statusStyle = StatusStyle.darkContent;
+        changeStatusBar(color: Colors.white,statusStyle: statusStyle);
+      }
     });
     loadData();
   }
@@ -86,7 +92,7 @@ class HomePageState extends HiState<HomePage>
       }
         //fix Android压后台，状态栏字体颜色变白问题
         if(_currentPage is! VideoDetailPage){
-          changeStatusBar(color: Colors.black, statusStyle: StatusStyle.lightContent);
+          changeStatusBar(color: Colors.white, statusStyle: StatusStyle.darkContent);
         }
         break;
       case AppLifecycleState.paused: //界面不可见，后台
