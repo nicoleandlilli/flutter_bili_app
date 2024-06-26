@@ -12,7 +12,7 @@ class HiTab extends StatelessWidget{
   final double insets;
   final Color? unselectedLabelColor;
 
-  const HiTab(this.tabs,{super.key, this.controller, this.fontSize, required this.borderWidth, required this.insets, this.unselectedLabelColor});
+  const HiTab(this.tabs,{super.key, this.controller, this.fontSize, this.borderWidth=3, this.insets=13, this.unselectedLabelColor});
 
 
   @override

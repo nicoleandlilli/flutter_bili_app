@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bili_app/model/home_mo.dart';
+import 'package:flutter_bili_app/widget/hi_tab.dart';
 import 'package:flutter_bili_app/widget/navigation_bar.dart';
 import 'package:flutter_bili_app/widget/video_view.dart';
 
@@ -20,18 +21,19 @@ class VideoDetailPage extends StatefulWidget{
 }
 
 class VideoDetailPageState extends State<VideoDetailPage> with TickerProviderStateMixin{
-  // TabController _controller;
+  late TabController _controller;
   List tabs = ["简介","评论"];
 
   @override
   void initState() {
     super.initState();
     _statusBarInit();
+    _controller=TabController(length: tabs.length, vsync: this);
   }
 
   @override
   void dispose() {
-    // _controller.dispose();
+    _controller.dispose();
     super.dispose();
   }
 
@@ -63,15 +65,24 @@ class VideoDetailPageState extends State<VideoDetailPage> with TickerProviderSta
     return Material(
       elevation: 5,
       shadowColor: Colors.grey[100],
-      child: const Row(
+      child: Row(
         children: [
-          // _tabBar(),
-          Padding(padding: EdgeInsets.only(right: 20),child: Icon(Icons.live_tv_rounded,color: Colors.grey,),)
+          _tabBar(),
+          const Padding(padding: EdgeInsets.only(right: 20),child: Icon(Icons.live_tv_rounded,color: Colors.grey,),)
         ],
       ),
     );
   }
 
-  _tabBar() {}
+  _tabBar() {
+    return HiTab(
+        tabs.map<Tab>((name) {
+          return Tab(
+            text: name,
+          );
+        }).toList(),
+        controller: _controller,
+    );
+  }
 
 }
