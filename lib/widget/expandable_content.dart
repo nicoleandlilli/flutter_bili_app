@@ -2,6 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bili_app/model/home_mo.dart';
+import 'package:flutter_bili_app/util/view_util.dart';
+
+import '../util/date_util.dart';
 
 ///可展开的widget
 class ExpandableContent extends StatefulWidget {
@@ -50,6 +53,7 @@ class  ExpandableContentState extends State<ExpandableContent> with SingleTicker
         children: [
           _buildTitle(),
           const Padding(padding: EdgeInsets.only(bottom: 8)),
+          _buildInfo(),
         ],
       ),
     );
@@ -57,7 +61,7 @@ class  ExpandableContentState extends State<ExpandableContent> with SingleTicker
 
   _buildTitle() {
     return InkWell(
-      onDoubleTap: _toggleExpand,
+      onTap: _toggleExpand,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -75,5 +79,33 @@ class  ExpandableContentState extends State<ExpandableContent> with SingleTicker
 
 
   void _toggleExpand() {
+    setState(() {
+      _expand=!_expand;
+      if(_expand){
+        //执行动画
+        _controller.forward();
+      }else{
+        //反向执行动画
+        _controller.reverse();
+      }
+    });
+  }
+
+  _buildInfo(){
+    var style=const TextStyle(fontSize: 12,color: Colors.grey);
+    var dataStr = widget.videoMo.ctime.toString().length>10
+    ? widget.videoMo.ctime.toString().substring(5,10)
+        :widget.videoMo.ctime.toString();
+
+
+    return Row(
+      children: [
+        smallIconText(Icons.ondemand_video, widget.videoMo.stat?.view!),
+        const Padding(padding: EdgeInsets.only(left: 10)),
+        smallIconText(Icons.list_alt, widget.videoMo.stat?.reply),
+        // Text('  $dataStr',style: style,),
+        Text('  ${timestampToDate(widget.videoMo.ctime!*1000)}',style: style,),
+      ],
+    );
   }
 }

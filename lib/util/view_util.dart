@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bili_app/util/format_util.dart';
 
 import 'package:status_bar_control/status_bar_control.dart';
 
@@ -67,4 +68,38 @@ void changeStatusBar (
   StatusBarControl.setColor(color,animated: false);
   //设置状态栏文字的颜色
   await StatusBarControl.setStyle(statusStyle==StatusStyle.darkContent?StatusBarStyle.DARK_CONTENT:StatusBarStyle.LIGHT_CONTENT);
+}
+
+///带文字的小图标
+smallIconText(IconData iconData, var text){
+  var style = const TextStyle(fontSize: 12, color: Colors.grey);
+  if(text is int){
+    text = countFormat(text);
+  }
+
+  return Row(
+    children: [
+      Icon(
+        iconData,
+        color: Colors.grey,
+        size: 12,
+      ),
+      Text(
+        ' $text',
+        style: style,
+      ),
+    ],
+  );
+
+  // return [
+  //   Icon(
+  //     iconData,
+  //     color: Colors.grey,
+  //     size: 12,
+  //   ),
+  //   Text(
+  //     ' $text',
+  //     style: style,
+  //   ),
+  // ];
 }
