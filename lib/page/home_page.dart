@@ -6,6 +6,7 @@ import 'package:flutter_bili_app/http/core/hi_error.dart';
 import 'package:flutter_bili_app/http/dao/home_dao.dart';
 import 'package:flutter_bili_app/navigator/hi_navigator.dart';
 import 'package:flutter_bili_app/page/home_tab_page.dart';
+import 'package:flutter_bili_app/page/video_detail_page.dart';
 import 'package:flutter_bili_app/util/color.dart';
 import 'package:flutter_bili_app/util/toast.dart';
 import 'package:flutter_bili_app/util/view_util.dart';
@@ -25,19 +26,23 @@ class HomePage extends StatefulWidget {
 // class _HomePageState extends State<HomePage>
 
 class HomePageState extends HiState<HomePage>
-    with AutomaticKeepAliveClientMixin,TickerProviderStateMixin{
+    // with AutomaticKeepAliveClientMixin,TickerProviderStateMixin{
+    with AutomaticKeepAliveClientMixin,TickerProviderStateMixin, WidgetsBindingObserver{
 
   var listener;
   late TabController _controller;
   var tabs = ["推荐","热门", "追播","影视","搞笑","日常","综合","手机游戏","短片-手书-配音"];
   List<CategoryMo> categoryList = [];
   List<BannerMo> bannerList = [];
+  late Widget _currentPage;
 
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     _controller=TabController(length: categoryList.length, vsync: this);
     HiNavigator.getInstance().addListener(listener = (current, pre) {
+      _currentPage = current.page;
       if (kDebugMode) {
         print('home:current:${current.page}');
       }
@@ -59,10 +64,40 @@ class HomePageState extends HiState<HomePage>
   }
   @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
     HiNavigator.getInstance().removeListener(listener);
     _controller.dispose();
     super.dispose();
   }
+
+  ///监听应用生命周期变化
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+    if (kDebugMode) {
+      print('didChangeAppLifecycleState: $state');
+    }
+    switch(state){
+      case AppLifecycleState.inactive://处于这种状态的应用程序应该假设它们可能在任何时候暂停
+        break;
+      case AppLifecycleState.resumed: //从后台切换前台，界面可见
+      if (kDebugMode) {
+        print('home界面又重新可见');
+      }
+        //fix Android压后台，状态栏字体颜色变白问题
+        if(_currentPage is! VideoDetailPage){
+          changeStatusBar(color: Colors.black, statusStyle: StatusStyle.lightContent);
+        }
+        break;
+      case AppLifecycleState.paused: //界面不可见，后台
+      break;
+      case AppLifecycleState.detached://App结束时调用
+        break;
+      case AppLifecycleState.hidden: //界面不可见时调用
+        break;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
    return Scaffold(
