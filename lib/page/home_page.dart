@@ -11,6 +11,7 @@ import 'package:flutter_bili_app/page/video_detail_page.dart';
 import 'package:flutter_bili_app/util/color.dart';
 import 'package:flutter_bili_app/util/toast.dart';
 import 'package:flutter_bili_app/util/view_util.dart';
+import 'package:flutter_bili_app/widget/hi_tab.dart';
 import 'package:flutter_bili_app/widget/navigation_bar.dart';
 import 'package:underline_indicator/underline_indicator.dart';
 import '../model/home_mo.dart';
@@ -139,24 +140,38 @@ class HomePageState extends HiState<HomePage>
   @override
   bool get wantKeepAlive => true;
 
-  _tabBar() {
-    return TabBar(
-      controller: _controller,
-        isScrollable: true,
-        labelColor: Colors.black,
-        indicator: const UnderlineIndicator(
-            strokeCap: StrokeCap.round,
-            borderSide: BorderSide(color: primary,width: 3),
-            insets: EdgeInsets.only(left: 15,right: 15),
-        ),
-    tabs: categoryList.map<Tab>((tab) {
-      return Tab(child: Padding(
-        padding: const EdgeInsets.only(left: 5,right: 5),
-        child: Text(tab.title!,style: const TextStyle(fontSize: 16),),
-      ),);
-    }).toList(),
-    );// tabs: (tabs));
+  _tabBar(){
+    return HiTab(
+        categoryList.map<Tab>((tab) {
+          return Tab(
+            text: tab.title,
+          );
+        }).toList(),
+        controller: _controller,
+        fontSize: 16,
+        borderWidth: 3,
+        unselectedLabelColor: Colors.black54,
+        insets: 13);
   }
+
+  // _tabBar() {
+  //   return TabBar(
+  //     controller: _controller,
+  //       isScrollable: true,
+  //       labelColor: Colors.black,
+  //       indicator: const UnderlineIndicator(
+  //           strokeCap: StrokeCap.round,
+  //           borderSide: BorderSide(color: primary,width: 3),
+  //           insets: EdgeInsets.only(left: 15,right: 15),
+  //       ),
+  //   tabs: categoryList.map<Tab>((tab) {
+  //     return Tab(child: Padding(
+  //       padding: const EdgeInsets.only(left: 5,right: 5),
+  //       child: Text(tab.title!,style: const TextStyle(fontSize: 16),),
+  //     ),);
+  //   }).toList(),
+  //   );// tabs: (tabs));
+  // }
 
   _appBar(){
     return Padding(
