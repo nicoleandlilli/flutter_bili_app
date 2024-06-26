@@ -54,6 +54,7 @@ class  ExpandableContentState extends State<ExpandableContent> with SingleTicker
           _buildTitle(),
           const Padding(padding: EdgeInsets.only(bottom: 8)),
           _buildInfo(),
+          _buildDes(),
         ],
       ),
     );
@@ -107,5 +108,26 @@ class  ExpandableContentState extends State<ExpandableContent> with SingleTicker
         Text('  ${timestampToDate(widget.videoMo.ctime!*1000)}',style: style,),
       ],
     );
+  }
+
+  _buildDes() {
+    var child=_expand?Text(widget.videoMo.desc!,style: const TextStyle(fontSize: 12, color: Colors.grey),):null;
+    //构建动画通用的widget
+    return AnimatedBuilder(
+        animation: _controller.view,
+        builder: (BuildContext contest, Widget? child){
+          return Align(
+            heightFactor: _heightFactor.value,
+            //fix 从布局之上的位置开始展开
+            alignment: Alignment.topCenter,
+            child: Container(
+              //会撑满宽度后，让内容居左
+              alignment: Alignment.topLeft,
+              padding: const EdgeInsets.only(top: 8),
+              child: child,
+            ),
+          );
+        },
+        child: child);
   }
 }

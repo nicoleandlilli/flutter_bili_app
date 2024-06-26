@@ -99,17 +99,26 @@ class VideoDetailPageState extends State<VideoDetailPage> with TickerProviderSta
   _buildDetailList() {
     return ListView(
       padding: const EdgeInsets.all(0),
-      children: buildContents(),
+      children: [
+        buildContents(),
+        Container(
+          height: 500,
+          margin: const EdgeInsets.only(top: 10),
+          alignment: Alignment.topLeft,
+          decoration: const BoxDecoration(color: Colors.lightBlueAccent),
+          child: const Text('展开列表'),
+        ),
+      ],
     );
   }
 
   buildContents() {
-    return [
-      Container(
-        child: VideoHeader(owner: widget.videoMo.owner!,stat: widget.videoMo.stat!,),
-      ),
-      ExpandableContent(videoMo: widget.videoMo),
-    ];
+    return Column(
+      children: [
+        VideoHeader(owner: widget.videoMo.owner!,stat: widget.videoMo.stat!,),
+        ExpandableContent(videoMo: widget.videoMo),
+      ],
+    );
   }
 
 }
