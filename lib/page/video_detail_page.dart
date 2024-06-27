@@ -1,20 +1,21 @@
-import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bili_app/model/home_mo.dart';
 import 'package:flutter_bili_app/widget/expandable_content.dart';
 import 'package:flutter_bili_app/widget/hi_tab.dart';
 import 'package:flutter_bili_app/widget/navigation_bar.dart';
 import 'package:flutter_bili_app/widget/video_header.dart';
+import 'package:flutter_bili_app/widget/video_large_card.dart';
 import 'package:flutter_bili_app/widget/video_tool_bar.dart';
 import 'package:flutter_bili_app/widget/video_view.dart';
 
+import '../http/dao/home_dao.dart';
 import '../util/view_util.dart';
 import '../widget/appbar.dart';
 
 class VideoDetailPage extends StatefulWidget{
   final VideoMo videoMo;
-
 
   const VideoDetailPage({super.key, required this.videoMo});
   // args: {'videoMo':VideoMo(tid:bannerMo.tid)}
@@ -24,6 +25,7 @@ class VideoDetailPage extends StatefulWidget{
 }
 
 class VideoDetailPageState extends State<VideoDetailPage> with TickerProviderStateMixin{
+  List<VideoMo> videoList = [];
   late TabController _controller;
   List tabs = ["简介","评论"];
 
@@ -32,6 +34,7 @@ class VideoDetailPageState extends State<VideoDetailPage> with TickerProviderSta
     super.initState();
     _statusBarInit();
     _controller=TabController(length: tabs.length, vsync: this);
+    loadData();
   }
 
   @override
@@ -103,13 +106,10 @@ class VideoDetailPageState extends State<VideoDetailPage> with TickerProviderSta
       padding: const EdgeInsets.all(0),
       children: [
         buildContents(),
-        Container(
-          height: 500,
-          margin: const EdgeInsets.only(top: 10),
-          alignment: Alignment.topLeft,
-          decoration: const BoxDecoration(color: Colors.lightBlueAccent),
-          child: const Text('展开列表'),
-        ),
+        Column(
+          children: _buildVideoList(),
+        )
+
       ],
     );
   }
@@ -136,4 +136,23 @@ class VideoDetailPageState extends State<VideoDetailPage> with TickerProviderSta
 
   }
 
+  _buildVideoList(){
+    return videoList.map((VideoMo mo)=>VideoLargeCard(videoModel: mo)).toList();
+  }
+
+  void loadData() async{
+    try{
+      HomeMo result=await HomeDao.get('收藏',pageIndex: 0, pageSize: 100);
+      List<VideoMo>? videoMos = result?.list;
+      
+      setState(() {
+        videoList=[...?result?.list].sublist(30,90);
+      });
+    }catch(e){
+      if (kDebugMode) {
+        print(e);
+      }
+
+    }
+  }
 }
