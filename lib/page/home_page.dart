@@ -115,9 +115,11 @@ class HomePageState extends HiState<HomePage>
            child: _appBar(),
            color: Colors.white,
            statusStyle: StatusStyle.darkContent,
+
          ),
          Container(
-           color: Colors.white,
+           decoration: bottomBoxShadow(),
+           // color: Colors.white,
            padding: const EdgeInsets.only(top: 30),
            child: _tabBar(),
 
