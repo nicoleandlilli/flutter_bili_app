@@ -13,7 +13,7 @@ import 'package:flutter_bili_app/widget/video_view.dart';
 import '../http/dao/home_dao.dart';
 import '../util/view_util.dart';
 import '../widget/appbar.dart';
-
+import 'dart:math' as math;
 class VideoDetailPage extends StatefulWidget{
   final VideoMo videoMo;
 
@@ -144,9 +144,9 @@ class VideoDetailPageState extends State<VideoDetailPage> with TickerProviderSta
     try{
       HomeMo result=await HomeDao.get('收藏',pageIndex: 0, pageSize: 100);
       List<VideoMo>? videoMos = result?.list;
-      
+      var index = math.Random().nextInt(8);
       setState(() {
-        videoList=[...?result?.list].sublist(30,90);
+        videoList=[...?result?.list].sublist(index*10,90);
       });
     }catch(e){
       if (kDebugMode) {

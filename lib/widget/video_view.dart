@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bili_app/util/view_util.dart';
 import 'package:video_player/video_player.dart';
 import 'package:chewie/chewie.dart' hide MaterialControls;
-
+import 'dart:math' as math;
 import '../util/color.dart';
 import 'hi_video_controls.dart';
 
@@ -51,8 +51,9 @@ class VideoViewState extends State<VideoView> {
   void initState() {
     super.initState();
     _newplaceholder= _placeholder;
+    var index = math.Random().nextInt(9);
     //初始化播放器设置
-    _videoPlayerController=VideoPlayerController.networkUrl(Uri.parse(newUrl[0]));
+    _videoPlayerController=VideoPlayerController.networkUrl(Uri.parse(newUrl[index%9]));
     _initVideoPlayer();
     _chewieController=ChewieController(videoPlayerController: _videoPlayerController,
       aspectRatio: widget.aspectRatio,
