@@ -14,22 +14,23 @@ abstract class HiBaseTabState<M, L,T extends StatefulWidget> extends HiState<T>
   List<L> dataList = [];
   int pageIndex = 1;
   bool loading = false;
-  ScrollController _scrollController = ScrollController();
-  late Widget _currentPage;
+  final ScrollController scrollController = ScrollController();
 
   get contentChild ;
 
   @override
   void initState() {
     super.initState();
-    _scrollController.addListener(() {
-      var dis = _scrollController.position.maxScrollExtent -
-      _scrollController.position.pixels;
+    scrollController.addListener(() {
+      var dis = scrollController.position.maxScrollExtent -
+      scrollController.position.pixels;
       if (kDebugMode) {
         print('dis:$dis');
       }
       //当距离底部不足300时加载更多
-      if(dis<300&&!loading){
+      if(dis<300&&!loading &&
+          //fix 当列表高度不满屏幕高度时不执行加载更多
+          scrollController.position.maxScrollExtent != 0){
         if (kDebugMode) {
           print('-------_loadData------------');
         }
@@ -42,7 +43,7 @@ abstract class HiBaseTabState<M, L,T extends StatefulWidget> extends HiState<T>
   }
   @override
   void dispose() {
-    _scrollController.dispose();
+    scrollController.dispose();
     super.dispose();
   }
 
@@ -95,24 +96,30 @@ abstract class HiBaseTabState<M, L,T extends StatefulWidget> extends HiState<T>
           dataList = pareList(result);
         }
       });
+      Future.delayed(Duration(milliseconds: 1000), () {
+        loading = false;
+      });
     }on NeedAuth catch(e){
+      loading = false;
       if (kDebugMode) {
         print(e);
       }
       showWarnToast(e.message);
     }on HiNetError catch(e){
+      loading = false;
       if (kDebugMode) {
         print(e);
       }
       showWarnToast(e.message);
     }catch(e){
+      loading = false;
       if (kDebugMode) {
         print(e);
       }
       showWarnToast(e.toString());
     }
-
   }
+
   @override
   bool get wantKeepAlive => true;
 }

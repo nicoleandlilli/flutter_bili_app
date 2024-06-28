@@ -146,7 +146,8 @@ class VideoDetailPageState extends State<VideoDetailPage> with TickerProviderSta
       List<VideoMo>? videoMos = result?.list;
       var index = math.Random().nextInt(8);
       setState(() {
-        videoList=[...?result?.list].sublist(index*10,90);
+        // videoList=[...?result?.list].sublist(index*10,90);
+        videoList=videoMos!.sublist(index*10,90);
       });
     }catch(e){
       if (kDebugMode) {

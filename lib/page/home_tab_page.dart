@@ -1,14 +1,12 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
+import 'package:flutter_bili_app/core/hi_base_tab_state.dart';
 import 'package:flutter_bili_app/widget/hi_banner.dart';
 import 'package:flutter_bili_app/widget/video_card.dart';
 import 'package:staggered_grid_view_flutter/widgets/staggered_grid_view.dart';
 import 'package:staggered_grid_view_flutter/widgets/staggered_tile.dart';
-
-import '../http/core/hi_error.dart';
 import '../http/dao/home_dao.dart';
 import '../model/home_mo.dart';
-import '../util/toast.dart';
+import 'dart:math' as math;
 
 class HomeTabPage extends StatefulWidget{
   String categoryName;
@@ -23,43 +21,41 @@ class HomeTabPage extends StatefulWidget{
 }
 
 // class HomeTabPageState extends State<HomeTabPage> {
-class HomeTabPageState extends State<HomeTabPage> with AutomaticKeepAliveClientMixin{
-  List<VideoMo> videoList = [];
-  int pageIndex = 1;
-
+class HomeTabPageState extends HiBaseTabState<HomeMo, VideoMo,HomeTabPage>{
 
   @override
   void initState() {
     super.initState();
-    _loadData();
+    print(widget.categoryName);
+    print(widget.bannerList);
   }
 
   @override
-  Widget build(BuildContext context) {
-    return MediaQuery.removePadding(
-        context: context,
-        removeTop: true,
-        child: StaggeredGridView.countBuilder(
-          crossAxisCount: 2,
-          itemCount: videoList.length,
-          padding: const EdgeInsets.only(top: 10, left: 10, right: 10),
-          itemBuilder: (BuildContext context, int index) {
-            //有banner时第一个item位置显示banner
-            if (widget.bannerList != null && index == 0) {
-              return Padding(
-                padding: const EdgeInsets.only(bottom: 8), child: _banner(),);
-            } else {
-              return VideoCard(videoMo: videoList[index]);
-            }
-          }, staggeredTileBuilder: (int index) {
-          if (widget.bannerList != null && index == 0) {
-            return const StaggeredTile.fit(2);
-          } else {
-            return const StaggeredTile.fit(1);
-          }
-        },));
-
-  }
+  // Widget build(BuildContext context) {
+  //   return MediaQuery.removePadding(
+  //       context: context,
+  //       removeTop: true,
+  //       child: StaggeredGridView.countBuilder(
+  //         crossAxisCount: 2,
+  //         itemCount: dataList.length,
+  //         padding: const EdgeInsets.only(top: 10, left: 10, right: 10),
+  //         itemBuilder: (BuildContext context, int index) {
+  //           //有banner时第一个item位置显示banner
+  //           if (widget.bannerList != null && index == 0) {
+  //             return Padding(
+  //               padding: const EdgeInsets.only(bottom: 8), child: _banner(),);
+  //           } else {
+  //             return VideoCard(videoMo: dataList[index]);
+  //           }
+  //         }, staggeredTileBuilder: (int index) {
+  //         if (widget.bannerList != null && index == 0) {
+  //           return const StaggeredTile.fit(2);
+  //         } else {
+  //           return const StaggeredTile.fit(1);
+  //         }
+  //       },));
+  //
+  // }
 
   _banner() {
     return Padding(
@@ -68,48 +64,42 @@ class HomeTabPageState extends State<HomeTabPage> with AutomaticKeepAliveClientM
     );
     
   }
-  
-  void _loadData({loadMore = false}) async{
-    if(!loadMore){
-      pageIndex=1;
+
+  @override
+  get contentChild => StaggeredGridView.countBuilder(
+    crossAxisCount: 2,
+    itemCount: dataList.length,
+    controller: scrollController,
+    padding: const EdgeInsets.only(top: 10, left: 10, right: 10),
+    itemBuilder: (BuildContext context, int index) {
+      //有banner时第一个item位置显示banner
+      if (widget.bannerList != null && index == 0) {
+        return Padding(
+          padding: const EdgeInsets.only(bottom: 8), child: _banner(),);
+      } else {
+        return VideoCard(videoMo: dataList[index]);
+      }
+    }, staggeredTileBuilder: (int index) {
+    if (widget.bannerList != null && index == 0) {
+      return const StaggeredTile.fit(2);
+    } else {
+      return const StaggeredTile.fit(1);
     }
-    var currentIndex = pageIndex + (loadMore? 1: 0);
-    widget.tabIndex = widget.tabs.indexOf(widget.categoryName);
-    try{
-      HomeMo result=await HomeDao.get(widget.categoryName,pageIndex: currentIndex, pageSize: 100);
-      setState(() {
-        if(loadMore){
-          if(result?.list!=null){
-            videoList=[...videoList,...?result?.list];
-            pageIndex++;
-          }
-        }else{
-          //模拟不同tab界面返回的内容
-          var tempVideoList = result!.list!;
-          videoList = tempVideoList.sublist(widget.tabIndex*10,tempVideoList.length);
-        }
-      });
+  },);
 
 
-    }on NeedAuth catch(e){
-      if (kDebugMode) {
-        print(e);
-      }
-      showWarnToast(e.message);
-    }on HiNetError catch(e){
-      if (kDebugMode) {
-        print(e);
-      }
-      showWarnToast(e.message);
-    }catch(e){
-      if (kDebugMode) {
-        print(e);
-      }
-      showWarnToast(e.toString());
-    }
+
+  @override
+  Future<HomeMo> getData(int pageIndex) async{
+    HomeMo result = await HomeDao.get(widget.categoryName, pageIndex: pageIndex, pageSize: 10);
+    return result;
   }
 
   @override
-  bool get wantKeepAlive => true;
+  List<VideoMo> pareList(HomeMo result) {
+    List<VideoMo> lists = result.list!;
+    var index = math.Random().nextInt(9);
+    return lists.sublist(index*10,index*10+10)!;
+  }
 
 }
