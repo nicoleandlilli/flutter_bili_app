@@ -92,6 +92,8 @@ class VideoLargeCard extends StatelessWidget {
           children: [
             Row(
               children: [
+                smallIconText(Icons.favorite_border_rounded, videoModel.stat?.favorite!),
+                hiSpace(width: 5),
                 smallIconText(Icons.ondemand_video, videoModel.stat?.view!),
                 hiSpace(width: 5),
                 smallIconText(Icons.list_alt, videoModel.stat?.reply!)
