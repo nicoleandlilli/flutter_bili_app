@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bili_app/util/view_util.dart';
 import 'package:flutter_bili_app/widget/hi_blur.dart';
+import 'package:flutter_bili_app/widget/hi_flexible_header.dart';
 
 import '../http/core/hi_error.dart';
 import '../http/dao/home_dao.dart';
@@ -30,9 +31,16 @@ class ProfilePageState extends State<ProfilePage> {
   }
 
   @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: NestedScrollView(
+        controller: _scrollController,
         headerSliverBuilder: (BuildContext context, bool innerBoxISsCROLLED){
           return <Widget>[
             _buildAppBar(),
@@ -104,19 +112,7 @@ class ProfilePageState extends State<ProfilePage> {
 
   _buildHead() {
     if(_profileMo==null) return Container();
-    return Container(
-      alignment: Alignment.bottomLeft,
-      child: Row(
-        children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(23),
-            child: cachedImage(_profileMo!.pic!, width: 46, height: 46),
-          ),
-          hiSpace(width: 8),
-          Text(_profileMo!.owner!.name!, style: const TextStyle(fontSize:11, color: Colors.black54 ),)
-        ],
-      ),
-    );
+    return HiFlexibleHeader(name: _profileMo!.owner!.name!, face: _profileMo!.firstFrame!, controller: _scrollController);
   }
 
 }
