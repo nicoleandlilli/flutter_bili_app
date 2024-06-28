@@ -49,7 +49,9 @@ class HiFlexibleHeaderState extends State<HiFlexibleHeader> {
         //算出实际的padding
         _dyBottom = minBottom + dy;
       });
-      print('_dyBottom:$_dyBottom');
+      if (kDebugMode) {
+        print('_dyBottom:$_dyBottom');
+      }
     });
   }
 

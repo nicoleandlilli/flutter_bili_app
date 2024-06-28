@@ -11,6 +11,8 @@ import '../model/home_mo.dart';
 import '../util/toast.dart';
 import 'dart:math' as math;
 
+import '../widget/hi_banner.dart';
+
 class ProfilePage extends StatefulWidget{
   const ProfilePage({super.key});
 
@@ -20,8 +22,9 @@ class ProfilePage extends StatefulWidget{
 }
 
 
-class ProfilePageState extends State<ProfilePage> {
+class ProfilePageState extends State<ProfilePage> with AutomaticKeepAliveClientMixin{
   VideoMo? _profileMo;
+  List<BannerMo> bannerList = [];
   final ScrollController _scrollController = ScrollController();
 
   @override
@@ -38,23 +41,27 @@ class ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: NestedScrollView(
-        controller: _scrollController,
-        headerSliverBuilder: (BuildContext context, bool innerBoxISsCROLLED){
-          return <Widget>[
-            _buildAppBar(),
-          ];
-        }, body: ListView.builder(
-          itemBuilder: (BuildContext context, int index){
-            return ListTile(
-             title: Text('标题$index'),
-            );
+    if(_profileMo==null){
+      return Container();
+    }else{
+      return Scaffold(
+        body: NestedScrollView(
+          controller: _scrollController,
+          headerSliverBuilder: (BuildContext context, bool innerBoxISsCROLLED){
+            return <Widget>[
+              _buildAppBar(),
+            ];
           },
-          itemCount: 20,
+          body: ListView(
+            padding: const EdgeInsets.only(top: 10),
+            children: [
+              ..._buildContentList(),
+            ],
+          ),
         ),
-      ),
-    );
+      );
+    }
+
   }
 
   SliverAppBar _buildAppBar() {
@@ -74,6 +81,7 @@ class ProfilePageState extends State<ProfilePage> {
                   const Positioned.fill(
                     child: HiBlur(sigma: 20,),
                   ),
+                  Positioned(bottom: 0, left: 0, right: 0, child: _buildProfileTab())
                 ],
               ),
             ),
@@ -86,10 +94,22 @@ class ProfilePageState extends State<ProfilePage> {
       if (kDebugMode) {
         print("Home页获取到数据：$result");
       }
-      // List<VideoMo>? videoMos = result?.list;
+      List<VideoMo>? videoMos = result?.list;
+      //模拟数据
+      List<BannerMo> tempBannerList = [];
+      for(int i=0;i<4;i++){
+        BannerMo bm = BannerMo();
+        VideoMo videoMo = videoMos![i+45]!;
+        bm.title = videoMo.title;
+        bm.aid = videoMo.aid;
+        bm.tid = videoMo.tid;
+        bm.cover =videoMo.pic;
+        tempBannerList.add(bm);
+      }
       setState(() {
         var index = math.Random().nextInt(100);
         _profileMo = result.list![index];
+        bannerList = tempBannerList;
       });
 
     }on NeedAuth catch(e){
@@ -113,6 +133,50 @@ class ProfilePageState extends State<ProfilePage> {
   _buildHead() {
     if(_profileMo==null) return Container();
     return HiFlexibleHeader(name: _profileMo!.owner!.name!, face: _profileMo!.firstFrame!, controller: _scrollController);
+  }
+
+  @override
+  bool get wantKeepAlive => true;
+
+  _buildProfileTab() {
+    if (_profileMo == null) return Container();
+    return Container(
+      padding: const EdgeInsets.only(top: 5, bottom: 5),
+      decoration: const BoxDecoration(color: Colors.white54),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          _buildIconText('收藏', _profileMo!.stat!.favorite!%100),
+          _buildIconText('点赞', _profileMo!.stat!.like!%100),
+          _buildIconText('浏览', _profileMo!.stat!.view!%100),
+          _buildIconText('金币', _profileMo!.stat!.coin!%100),
+          _buildIconText('粉丝', _profileMo!.stat!.hisRank!),
+        ],
+      ),
+    );
+  }
+
+  _buildIconText(String text, int count) {
+    return Column(
+      children: [
+        Text('$count', style: TextStyle(fontSize: 15, color: Colors.black87)),
+        Text(text, style: TextStyle(fontSize: 12, color: Colors.grey[600])),
+      ],
+    );
+  }
+
+  _buildContentList() {
+    if (_profileMo == null) {
+      return [];
+    }
+    return [
+      _buildBanner(),
+    ];
+  }
+
+   _buildBanner() {
+    return HiBanner(bannerList,
+        bannerHeight: 120, padding: const EdgeInsets.only(left: 10, right: 10));
   }
 
 }

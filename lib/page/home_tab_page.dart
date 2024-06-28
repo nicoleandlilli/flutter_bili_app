@@ -58,7 +58,7 @@ class HomeTabPageState extends HiBaseTabState<HomeMo, VideoMo,HomeTabPage>{
   // }
 
   _banner() {
-    return HiBanner(widget.bannerList!, pading: const EdgeInsets.only(left: 5, right: 5),);
+    return HiBanner(widget.bannerList!, padding: const EdgeInsets.only(left: 5, right: 5),);
     // return Padding(
     //     padding: const EdgeInsets.only(left: 5,right: 5),
     //   child: HiBanner(widget!.bannerList!),
