@@ -29,7 +29,7 @@ class ProfilePageState extends State<ProfilePage> with AutomaticKeepAliveClientM
   VideoMo? _profileMo;
   List<BannerMo> bannerList = [];
   List<VideoMo> dataList = [];
-  List<Benefit> benefitList = [Benefit(name: '人文历史'),Benefit(name: '科学科普'),Benefit(name: '职业职场')];
+  List<Benefit> benefitList = [];
   final ScrollController _scrollController = ScrollController();
 
   @override
@@ -116,6 +116,7 @@ class ProfilePageState extends State<ProfilePage> with AutomaticKeepAliveClientM
         _profileMo = result.list![index];
         bannerList = tempBannerList;
         dataList = videoMos!.sublist(0,3);
+        benefitList = [Benefit(name: '人文历史'),Benefit(name: '科学科普'),Benefit(name: '职业职场')];
       });
 
     }on NeedAuth catch(e){
