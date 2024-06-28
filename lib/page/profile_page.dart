@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bili_app/util/view_util.dart';
+import 'package:flutter_bili_app/widget/course_card.dart';
 import 'package:flutter_bili_app/widget/hi_blur.dart';
 import 'package:flutter_bili_app/widget/hi_flexible_header.dart';
 
@@ -25,6 +26,7 @@ class ProfilePage extends StatefulWidget{
 class ProfilePageState extends State<ProfilePage> with AutomaticKeepAliveClientMixin{
   VideoMo? _profileMo;
   List<BannerMo> bannerList = [];
+  List<VideoMo> dataList = [];
   final ScrollController _scrollController = ScrollController();
 
   @override
@@ -110,6 +112,7 @@ class ProfilePageState extends State<ProfilePage> with AutomaticKeepAliveClientM
         var index = math.Random().nextInt(100);
         _profileMo = result.list![index];
         bannerList = tempBannerList;
+        dataList = videoMos!.sublist(0,3);
       });
 
     }on NeedAuth catch(e){
@@ -171,6 +174,7 @@ class ProfilePageState extends State<ProfilePage> with AutomaticKeepAliveClientM
     }
     return [
       _buildBanner(),
+      CourseCard(courseList: dataList,)
     ];
   }
 
