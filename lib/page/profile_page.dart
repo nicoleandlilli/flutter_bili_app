@@ -8,10 +8,12 @@ import 'package:flutter_bili_app/widget/hi_flexible_header.dart';
 
 import '../http/core/hi_error.dart';
 import '../http/dao/home_dao.dart';
+import '../model/benifit_mo.dart';
 import '../model/home_mo.dart';
 import '../util/toast.dart';
 import 'dart:math' as math;
 
+import '../widget/benefit_card.dart';
 import '../widget/hi_banner.dart';
 
 class ProfilePage extends StatefulWidget{
@@ -27,6 +29,7 @@ class ProfilePageState extends State<ProfilePage> with AutomaticKeepAliveClientM
   VideoMo? _profileMo;
   List<BannerMo> bannerList = [];
   List<VideoMo> dataList = [];
+  List<Benefit> benefitList = [Benefit(name: '人文历史'),Benefit(name: '科学科普'),Benefit(name: '职业职场')];
   final ScrollController _scrollController = ScrollController();
 
   @override
@@ -174,7 +177,8 @@ class ProfilePageState extends State<ProfilePage> with AutomaticKeepAliveClientM
     }
     return [
       _buildBanner(),
-      CourseCard(courseList: dataList,)
+      CourseCard(courseList: dataList,),
+      BenefitCard(benefitList: benefitList),
     ];
   }
 
