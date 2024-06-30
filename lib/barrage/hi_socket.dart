@@ -68,7 +68,7 @@ class HiSocket implements ISocket{
   void _handleMessage(message) {
     if (kDebugMode) {
       print('received: $message');
-      _channel.sink.add('Hello websocket server!');
+      // _channel.sink.add('Hello websocket server!');
       // _channel.sink.add('received!');
       // _channel.sink.close(status.goingAway);
     }
