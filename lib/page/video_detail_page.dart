@@ -1,19 +1,23 @@
 
+import 'dart:convert';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bili_app/barrage/hi_socket.dart';
 import 'package:flutter_bili_app/model/home_mo.dart';
 import 'package:flutter_bili_app/widget/expandable_content.dart';
 import 'package:flutter_bili_app/widget/hi_tab.dart';
-import 'package:flutter_bili_app/widget/navigation_bar.dart';
 import 'package:flutter_bili_app/widget/video_header.dart';
 import 'package:flutter_bili_app/widget/video_large_card.dart';
 import 'package:flutter_bili_app/widget/video_tool_bar.dart';
 import 'package:flutter_bili_app/widget/video_view.dart';
-
+import 'package:web_socket_channel/io.dart';
 import '../http/dao/home_dao.dart';
 import '../util/view_util.dart';
 import '../widget/appbar.dart';
 import 'dart:math' as math;
+
+
 class VideoDetailPage extends StatefulWidget{
   final VideoMo videoMo;
 
@@ -28,18 +32,21 @@ class VideoDetailPageState extends State<VideoDetailPage> with TickerProviderSta
   List<VideoMo> videoList = [];
   late TabController _controller;
   List tabs = ["简介","评论"];
+  late HiSocket _hiSocket;
 
   @override
   void initState() {
     super.initState();
     _statusBarInit();
     _controller=TabController(length: tabs.length, vsync: this);
-    loadData();
+    _initSocket();
+    // loadData();
   }
 
   @override
   void dispose() {
     _controller.dispose();
+    _hiSocket.close();
     super.dispose();
   }
 
@@ -156,4 +163,14 @@ class VideoDetailPageState extends State<VideoDetailPage> with TickerProviderSta
 
     }
   }
+
+
+  void _initSocket() {
+    _hiSocket=HiSocket();
+    _hiSocket.open(widget.videoMo.bvid!).listen((value) {
+      print("received message.............$value");
+    });
+  }
+
+
 }

@@ -2,6 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bili_app/navigator/hi_navigator.dart';
 import 'package:flutter_bili_app/util/color.dart';
 import 'db/hi_cache.dart';
+///查看Bilibili API地址的网址：
+///https://socialsisteryi.github.io/bilibili-API-collect/#%F0%9F%8D%B4%E7%9B%AE%E5%BD%95
+
+///推荐界面实际打开网址：
+///https://api.bilibili.com/x/web-interface/ranking/v2
 
 void main() {
   runApp(const BiliApp());
