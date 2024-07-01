@@ -177,6 +177,7 @@ class HiBarrageState extends State<HiBarrage> implements IBarrage{
       for(BarrageModel barrageMo in temps){
         addBarrage(barrageMo);
       }
+      // play();
     }
 
   }

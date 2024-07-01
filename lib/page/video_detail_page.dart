@@ -63,7 +63,7 @@ class VideoDetailPageState extends State<VideoDetailPage> with TickerProviderSta
           //   statusStyle: StatusStyle.lightContent,
           //   height: Platform.isAndroid ?0 : 46,
           // )
-          VideoView(widget.videoMo.shortLinkV2!,cover:widget.videoMo.pic, overlayUI: videoAppBar(),autoPlay: true,barrageUI: HiBarrage(key: _barrageKey, vid: widget.videoMo.bvid!, autoPlay: true, top: 0, ),),
+          VideoView(widget.videoMo.shortLinkV2!,cover:widget.videoMo.pic, overlayUI: videoAppBar(),autoPlay: true,barrageUI: HiBarrage(key: _barrageKey, vid: widget.videoMo.bvid!, autoPlay: true, top: 20, ),),
           _buildTabNavigation(),
           Flexible(
               child: TabBarView(
