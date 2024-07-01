@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../model/barrage_model.dart';
 
 class BarrageViewUtil {
