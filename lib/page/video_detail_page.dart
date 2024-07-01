@@ -3,8 +3,9 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bili_app/barrage/barrage_input.dart';
+import 'package:flutter_bili_app/barrage/barrage_switch.dart';
 import 'package:flutter_bili_app/barrage/hi_barrage.dart';
-import 'package:flutter_bili_app/barrage/hi_socket.dart';
 import 'package:flutter_bili_app/model/home_mo.dart';
 import 'package:flutter_bili_app/widget/expandable_content.dart';
 import 'package:flutter_bili_app/widget/hi_tab.dart';
@@ -15,6 +16,7 @@ import 'package:flutter_bili_app/widget/video_view.dart';
 import '../http/dao/home_dao.dart';
 import '../util/view_util.dart';
 import '../widget/appbar.dart';
+import 'package:flutter_overlay/flutter_overlay.dart';
 import 'dart:math' as math;
 
 
@@ -33,6 +35,7 @@ class VideoDetailPageState extends State<VideoDetailPage> with TickerProviderSta
   late TabController _controller;
   List tabs = ["简介","评论"];
   final _barrageKey = GlobalKey<HiBarrageState>();
+  bool _inoutShowing = false;
   // late HiSocket _hiSocket;
 
   @override
@@ -93,7 +96,7 @@ class VideoDetailPageState extends State<VideoDetailPage> with TickerProviderSta
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           _tabBar(),
-          const Padding(padding: EdgeInsets.only(right: 20),child: Icon(Icons.live_tv_rounded,color: Colors.grey,),)
+          _buildBarrageBtn(),
         ],
       ),
     );
@@ -164,6 +167,40 @@ class VideoDetailPageState extends State<VideoDetailPage> with TickerProviderSta
       }
 
     }
+  }
+
+  _buildBarrageBtn() {
+
+    return BarrageSwitch(
+      inoutShowing: _inoutShowing,
+      onShowInput: (){
+        setState(() {
+          _inoutShowing=true;
+        });
+        HiOverlay.show(
+          context,
+          child: BarrageInput(
+            onTabClose: (){
+              setState(() {
+
+              });
+            },
+          ),
+        ).then((value){
+          if (kDebugMode) {
+            print('----------input:$value-------------');
+          }
+          _barrageKey.currentState!.send(value!);
+        });
+      },
+      onBarrageSwitch: (open){
+        if(open){
+          _barrageKey.currentState!.play();
+        }else{
+          _barrageKey.currentState!.pause();
+        }
+      });
+
   }
 
 
