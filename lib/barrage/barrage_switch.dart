@@ -16,12 +16,11 @@ class BarrageSwitch extends StatefulWidget {
   final ValueChanged<bool> onBarrageSwitch;
 
   const BarrageSwitch(
-      {Key? key,
+      {super.key,
       this.initSwitch = true,
       required this.onShowInput,
       required this.onBarrageSwitch,
-      this.inoutShowing = false})
-      : super(key: key);
+      this.inoutShowing = false});
 
   @override
   BarrageSwitchState createState() => BarrageSwitchState();

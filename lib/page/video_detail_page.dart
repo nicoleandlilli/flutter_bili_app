@@ -44,7 +44,7 @@ class VideoDetailPageState extends State<VideoDetailPage> with TickerProviderSta
     _statusBarInit();
     _controller=TabController(length: tabs.length, vsync: this);
     // _initSocket();
-    // loadData();
+    loadData();
   }
 
   @override

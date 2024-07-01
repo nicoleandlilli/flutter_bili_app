@@ -36,13 +36,14 @@ class HiBarrageState extends State<HiBarrage> implements IBarrage{
   final List<BarrageModel> _barrageModelList = []; //弹幕模型
   int _barrageIndex = 0; //第几条弹幕
   final Random _random = Random();
-  late BarrageStatus _barrageStatus;
+  BarrageStatus _barrageStatus=BarrageStatus.play;
   late Timer _timer;
 
   @override
   void initState() {
     super.initState();
     _hiSocket=HiSocket();
+    _timer=Timer(Duration(milliseconds: widget.speed),(){});
     _hiSocket.open(widget.vid).listen((value) {
       _handleMessage(value);
     });
@@ -82,12 +83,12 @@ class HiBarrageState extends State<HiBarrage> implements IBarrage{
     if (kDebugMode) {
       print("received message.................$modelList");
     }
-    // _hiSocket.send('message from server..............');
-    // if(instant){
-    //   _barrageModelList.insertAll(0, modelList);
-    // }else{
-    //   _barrageModelList.addAll(modelList);
-    // }
+
+    if(instant){
+      _barrageModelList.insertAll(0, modelList);
+    }else{
+      _barrageModelList.addAll(modelList);
+    }
 
     //收到新的弹幕后播放
     if(_barrageStatus==BarrageStatus.play){
@@ -129,10 +130,7 @@ class HiBarrageState extends State<HiBarrage> implements IBarrage{
 
   }
 
-  // late String content;
-  // late String vid;
-  // late int priority;
-  // late int type;
+  // 模拟数据
   void getPreBarrages(){
     List<BarrageModel> barrageMOs=[
       BarrageModel(content: '我班有个同学叫章正伟……', vid: 'df38309b', priority: 1, type: 1,),
@@ -163,17 +161,17 @@ class HiBarrageState extends State<HiBarrage> implements IBarrage{
       BarrageModel(content: '如果把海那边的敌人都杀光，我们是不是就真的自由了呢...', vid: 'a5203b0c', priority: 1, type: 1,),
     ];
 
-    var index1 = math.Random().nextInt(26);
-    var index2 = math.Random().nextInt(26);
+    var index1 = math.Random().nextInt(4);
+    var index2 = math.Random().nextInt(4);
     if(index1>index2){
-      // List<BarrageModel>  temps= barrageMOs.sublist(index2,index1);
-      List<BarrageModel>  temps= barrageMOs.sublist(0,4);
+      List<BarrageModel>  temps= barrageMOs.sublist(index2,index1);
+      // List<BarrageModel>  temps= barrageMOs.sublist(0,4);
       for(BarrageModel barrageMo in temps){
         addBarrage(barrageMo);
       }
     }else if(index1<index2){
-      List<BarrageModel>  temps= barrageMOs.sublist(0,4);
-      // List<BarrageModel>  temps= barrageMOs.sublist(index1,index2);
+      // List<BarrageModel>  temps= barrageMOs.sublist(0,4);
+      List<BarrageModel>  temps= barrageMOs.sublist(index1,index2);
       for(BarrageModel barrageMo in temps){
         addBarrage(barrageMo);
       }
