@@ -13,7 +13,7 @@ class BarrageItem extends StatelessWidget {
       this.id,
       required this.top,
       required this.onComplete,
-      this.duration = const Duration(milliseconds: 9000),
+      this.duration = const Duration(milliseconds: 5000),
       required this.child}
       );
 
