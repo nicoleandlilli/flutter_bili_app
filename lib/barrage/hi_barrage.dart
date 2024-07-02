@@ -43,7 +43,8 @@ class HiBarrageState extends State<HiBarrage> implements IBarrage{
   void initState() {
     super.initState();
     _hiSocket=HiSocket();
-    _timer=Timer(Duration(milliseconds: widget.speed),(){});
+    _timer=Timer(const Duration(milliseconds: 0),(){});
+    _timer.cancel();
     _hiSocket.open(widget.vid).listen((value) {
       _handleMessage(value);
     });
@@ -161,21 +162,20 @@ class HiBarrageState extends State<HiBarrage> implements IBarrage{
       BarrageModel(content: '如果把海那边的敌人都杀光，我们是不是就真的自由了呢...', vid: 'a5203b0c', priority: 1, type: 1,),
     ];
 
-    var index1 = math.Random().nextInt(4);
-    var index2 = math.Random().nextInt(4);
+    var index1 = math.Random().nextInt(26);
+    var index2 = math.Random().nextInt(26);
     if(index1>index2){
       List<BarrageModel>  temps= barrageMOs.sublist(index2,index1);
-      // List<BarrageModel>  temps= barrageMOs.sublist(0,4);
-      for(BarrageModel barrageMo in temps){
-        addBarrage(barrageMo);
-      }
+      // for(BarrageModel barrageMo in temps){
+      //   addBarrage(barrageMo);
+      // }
+      _handleMessage(temps);
     }else if(index1<index2){
-      // List<BarrageModel>  temps= barrageMOs.sublist(0,4);
       List<BarrageModel>  temps= barrageMOs.sublist(index1,index2);
-      for(BarrageModel barrageMo in temps){
-        addBarrage(barrageMo);
-      }
-      // play();
+      // for(BarrageModel barrageMo in temps){
+      //   addBarrage(barrageMo);
+      // }
+      _handleMessage(temps);
     }
 
   }
