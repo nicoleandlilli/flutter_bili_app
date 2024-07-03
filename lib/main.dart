@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bili_app/navigator/hi_navigator.dart';
+import 'package:flutter_bili_app/provider/theme_provider.dart';
 import 'package:flutter_bili_app/util/color.dart';
 import 'db/hi_cache.dart';
 ///查看Bilibili API地址的网址：
@@ -40,7 +41,10 @@ class BiliAppState extends State<BiliApp> {
 
           return MaterialApp(
             home: widget,
-            theme: ThemeData(primarySwatch: white),
+            // theme: ThemeData(primarySwatch: white),
+            theme: ThemeProvider().getTheme(),
+            darkTheme: ThemeProvider().getTheme(isDarkMode: true),
+            themeMode: ThemeProvider().getThemeMode(),
           );
         });
   }

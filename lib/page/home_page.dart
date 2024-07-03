@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flutter_bili_app/provider/theme_provider.dart';
 import 'package:flutter_bili_app/core/hi_state.dart';
 import 'package:flutter_bili_app/http/core/hi_error.dart';
 import 'package:flutter_bili_app/http/dao/home_dao.dart';
@@ -63,8 +63,14 @@ class HomePageState extends HiState<HomePage>
       }
 
       if(pre?.page is VideoDetailPage && current.page is! ProfilePage){
-        var statusStyle = StatusStyle.darkContent;
-        changeStatusBar(color: Colors.white,statusStyle: statusStyle);
+        // var statusStyle = StatusStyle.darkContent;
+        // changeStatusBar(color: Colors.white,statusStyle: statusStyle);
+
+        if(ThemeProvider().getThemeMode()==ThemeMode.light){
+          changeStatusBar(color: Colors.white, statusStyle: StatusStyle.darkContent);
+        }else{
+          changeStatusBar(color: HiColor.darkBg, statusStyle: StatusStyle.lightContent);
+        }
       }
     });
     loadData();
@@ -93,7 +99,11 @@ class HomePageState extends HiState<HomePage>
       }
         //fix Android压后台，状态栏字体颜色变白问题
         if(_currentPage is! VideoDetailPage){
-          changeStatusBar(color: Colors.white, statusStyle: StatusStyle.darkContent);
+          if(ThemeProvider().getThemeMode()==ThemeMode.light){
+            changeStatusBar(color: Colors.white, statusStyle: StatusStyle.darkContent);
+          }else{
+            changeStatusBar(color: HiColor.darkBg, statusStyle: StatusStyle.lightContent);
+          }
         }
         break;
       case AppLifecycleState.paused: //界面不可见，后台
@@ -110,13 +120,7 @@ class HomePageState extends HiState<HomePage>
    return Scaffold(
      body: Column(
        children: [
-         CNavigationBar(
-           height: 50,
-           child: _appBar(),
-           color: Colors.white,
-           statusStyle: StatusStyle.darkContent,
-
-         ),
+         buildCNavigationBar(),
          Container(
            decoration: bottomBoxShadow(),
            // color: Colors.white,
@@ -137,6 +141,27 @@ class HomePageState extends HiState<HomePage>
        ],
      ),
    );
+  }
+
+  CNavigationBar buildCNavigationBar() {
+    if(ThemeProvider().getThemeMode()==ThemeMode.light){
+      return CNavigationBar(
+        height: 50,
+        child: _appBar(),
+        color: Colors.white,
+        statusStyle: StatusStyle.darkContent,
+
+      );
+    }else{
+      return CNavigationBar(
+        height: 50,
+        child: _appBar(),
+        color: HiColor.darkBg,
+        statusStyle: StatusStyle.lightContent,
+
+      );
+    }
+
   }
 
   @override
