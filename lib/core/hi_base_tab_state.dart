@@ -4,7 +4,9 @@ import 'package:flutter_bili_app/core/hi_state.dart';
 import 'package:flutter_bili_app/util/color.dart';
 
 import '../http/core/hi_error.dart';
+import '../provider/theme_provider.dart';
 import '../util/toast.dart';
+import '../util/view_util.dart';
 
 ///通用底层带分页和刷新的页面框架
 ///M为Dao返回数据模型，L为列表数据模型，T为具体widget
@@ -38,6 +40,7 @@ abstract class HiBaseTabState<M, L,T extends StatefulWidget> extends HiState<T>
       }
       WidgetsBinding.instance.addObserver(this);
     });
+    initStatusBar();
 
     loadData();
   }
@@ -122,4 +125,12 @@ abstract class HiBaseTabState<M, L,T extends StatefulWidget> extends HiState<T>
 
   @override
   bool get wantKeepAlive => true;
+
+  void initStatusBar() {
+    if(ThemeProvider().getThemeMode()==ThemeMode.light){
+      changeStatusBar(color: Colors.white, statusStyle: StatusStyle.darkContent);
+    }else{
+      changeStatusBar(color: HiColor.darkBg, statusStyle: StatusStyle.lightContent);
+    }
+  }
 }

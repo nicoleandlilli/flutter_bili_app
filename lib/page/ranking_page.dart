@@ -4,6 +4,8 @@ import 'package:flutter_bili_app/page/ranking_tab_page.dart';
 import 'package:flutter_bili_app/util/view_util.dart';
 import 'package:flutter_bili_app/widget/hi_tab.dart';
 
+import '../provider/theme_provider.dart';
+import '../util/color.dart';
 import '../widget/navigation_bar.dart';
 
 class RankingPage extends StatefulWidget{
@@ -28,6 +30,11 @@ class RankingPageState extends State<RankingPage> with TickerProviderStateMixin{
   void initState() {
     super.initState();
     _controller=TabController(length: tabs.length, vsync: this);
+    if(ThemeProvider().getThemeMode()==ThemeMode.light){
+      changeStatusBar(color: Colors.white, statusStyle: StatusStyle.darkContent);
+    }else{
+      changeStatusBar(color: HiColor.darkBg, statusStyle: StatusStyle.lightContent);
+    }
   }
 
   @override
@@ -57,6 +64,7 @@ class RankingPageState extends State<RankingPage> with TickerProviderStateMixin{
       ),
 
     );
+
   }
 
   _tabBar() {

@@ -6,6 +6,9 @@ import 'package:flutter_bili_app/util/format_util.dart';
 
 import 'package:status_bar_control/status_bar_control.dart';
 
+import '../provider/theme_provider.dart';
+import 'color.dart';
+
 enum StatusStyle { lightContent, darkContent }
 
 ///带缓存的image
@@ -120,7 +123,13 @@ SizedBox hiSpace({double height =1, double width = 1}){
 
 ///底部阴影
 BoxDecoration bottomBoxShadow(){
-  return BoxDecoration(color: Colors.white, boxShadow: [
+  Color appBarBg;
+  if(ThemeProvider().getThemeMode()==ThemeMode.light){
+    appBarBg=white;
+  }else{
+    appBarBg=HiColor.darkBg;
+  }
+  return BoxDecoration(color: appBarBg, boxShadow: [
     BoxShadow(
       color: Colors.grey[100]!,
       offset: const Offset(0,5),//xy轴偏移
